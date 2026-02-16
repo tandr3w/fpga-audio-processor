@@ -1,0 +1,83 @@
+name: Simulation
+
+on:
+  push:
+    branches: [ main ]
+    paths-ignore: # prevent infinite calls to github actions
+      - .github/outputs/**
+  pull_request:
+
+permissions: # allow writes to repo
+  contents: write   
+
+jobs:
+  build-and-sim:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: sudo apt-get update && sudo apt-get install -y verilator g++ make
+
+    - name: Run SV testbench
+      run: |
+        verilator -sv $(find src -name '*.v') $(find src -name '*.sv') test/tb.sv \
+          --top-module tb \
+          --binary \
+          --trace \
+          --timing \
+          --assert \
+          -Mdir sim_out
+        echo "------------------ Running testbench -------------------"
+        ./sim_out/Vtb | tee sim.log
+        echo "------------------- Test complete ----------------------"
+
+    - name: Save waveform to repo
+      run: |
+        mkdir -p .github/outputs
+        mv sim_out/wave.vcd .github/outputs/wave.vcd
+        mv sim.log .github/outputs/sim.log
+
+    - name: Generate WaveDrom JSON
+      run: |
+        git clone https://github.com/Toroid-io/vcd2wavedrom 
+        cd vcd2wavedrom
+        python3 -m pip install --upgrade pip
+        python3 -m pip install vcdvcd
+        python3 -m pip install .
+        python3 -m vcd2wavedrom.vcd2wavedrom -i ../.github/outputs/wave.vcd -o ../.github/outputs/wave.json
+        cd ..
+        npx wavedrom-cli -i .github/outputs/wave.json > .github/outputs/wave.svg
+
+    - name: Commit output folder
+      if: github.event_name == 'push'
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add .github/outputs/*
+        git commit -m "Github Actions: generated output files" || echo "No changes to commit"
+        git push
+
+    - name: Upload simulation output
+      uses: actions/upload-artifact@v4
+      with:
+        name: sim-output
+        path: |
+          .github/outputs/sim.log
+          .github/outputs/wave.vcd
+          .github/outputs/wave.svg
+          .github/outputs/wave.json
+
+    - name: Write job summary
+      run: |
+        echo "## Verilator Simulation Results" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "- Simulation completed" >> $GITHUB_STEP_SUMMARY
+        echo "- Log file: \`sim.log\`" >> $GITHUB_STEP_SUMMARY
+        echo "- Waveform file: \`.github/outputs/wave.vcd\`" >> $GITHUB_STEP_SUMMARY
+        echo "- Waveform Preview:"
+        echo " ![Waveform](https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/${GITHUB_REF_NAME}/.github/outputs/wave.svg)" >> $GITHUB_STEP_SUMMARY
+        echo "- Live Waveform Viewer (Surfer): https://app.surfer-project.org" >> $GITHUB_STEP_SUMMARY
+        echo "- Load waveform from this URL (in Surfer): https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/${GITHUB_REF_NAME}/.github/outputs/wave.vcd" >> $GITHUB_STEP_SUMMARY
+  
+        

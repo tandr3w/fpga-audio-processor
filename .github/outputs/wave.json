@@ -1,0 +1,39 @@
+{
+    "signal": [
+        {
+            "name": "TOP.tb.a",
+            "wave": "0.1.0.1.",
+            "data": []
+        },
+        {
+            "name": "TOP.tb.b",
+            "wave": "01010101",
+            "data": []
+        },
+        {
+            "name": "TOP.tb.and_o",
+            "wave": "0..10..1",
+            "data": []
+        },
+        {
+            "name": "TOP.tb.xor_o",
+            "wave": "01.0.1.0",
+            "data": []
+        },
+        {
+            "name": "TOP.tb.and_or_xor[2:0]",
+            "wave": "==.===.=",
+            "data": [
+                "0",
+                "3",
+                "6",
+                "0",
+                "3",
+                "6"
+            ]
+        }
+    ],
+    "config": {
+        "hscale": 1
+    }
+}
