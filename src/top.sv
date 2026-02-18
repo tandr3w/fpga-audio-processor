@@ -16,11 +16,12 @@ module top (
 
 logic signed [31:0] l_processed, r_processed;
 
-assign read_audio_in = audio_in_available && audio_out_allowed;
-assign write_audio_out = audio_in_available && audio_out_allowed;
-
 always_ff @(posedge CLOCK_50) begin
-    if (read_audio_in) begin
+
+    read_audio_in <= audio_in_available && audio_out_allowed;
+    write_audio_out <= audio_in_available && audio_out_allowed;
+
+    if (audio_in_available && audio_out_allowed) begin
         // Get audio input
         l_processed = audio_in_L;
         r_processed = audio_in_R;
