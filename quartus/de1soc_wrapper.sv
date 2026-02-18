@@ -1,7 +1,7 @@
 `timescale 1ns/100ps
 `include "Audio_Controller/Audio_Controller.v"
 `include "avconf/avconf.v"
-`include "../top.sv"
+`include "src/top.sv"
 
 module de1soc_wrapper (
     input         CLOCK_50,
