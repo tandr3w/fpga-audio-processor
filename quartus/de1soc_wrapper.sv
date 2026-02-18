@@ -111,7 +111,7 @@ module de1soc_wrapper (
         .audio_out_L(logic_to_spk_L),
         .audio_out_R(logic_to_spk_R),
         .audio_in_available(audio_in_available),
-        .audio_out_allowed(audio_out_available),
+        .audio_out_allowed(audio_out_allowed),
         .read_audio_in(read_request),               
         .write_audio_out(write_request)          
     );
