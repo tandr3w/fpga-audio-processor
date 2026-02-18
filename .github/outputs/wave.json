@@ -47,6 +47,11 @@
             "data": []
         },
         {
+            "name": "TOP.tb.write_audio_out",
+            "wave": "0..........1.0.....1.0",
+            "data": []
+        },
+        {
             "name": "TOP.tb.audio_out_L[31:0]",
             "wave": "=..........=.......=..",
             "data": [
