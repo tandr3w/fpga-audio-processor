@@ -1,7 +1,4 @@
 `timescale 1ns/100ps
-`include "Audio_Controller/Audio_Controller.v"
-`include "avconf/avconf.v"
-`include "src/top.sv"
 
 module de1soc_wrapper (
     input         CLOCK_50,
@@ -105,7 +102,7 @@ module de1soc_wrapper (
 
     top effects (
         .CLOCK_50   (CLOCK_50),
-        .switches   (SW),
+        .SW         (SW),
         .audio_in_L (mic_to_logic_L),
         .audio_in_R (mic_to_logic_R),
         .audio_out_L(logic_to_spk_L),

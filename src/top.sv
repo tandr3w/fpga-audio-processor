@@ -1,7 +1,6 @@
 `timescale 1ns/100ps
 
-module top #(
-) (
+module top (
     input  logic       CLOCK_50,
     input  logic [9:0] SW,
     input  logic       audio_in_available,
