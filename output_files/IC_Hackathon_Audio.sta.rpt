@@ -1,5 +1,5 @@
 Timing Analyzer report for IC_Hackathon_Audio
-Wed Feb 18 13:05:03 2026
+Wed Feb 18 13:13:37 2026
 Quartus Prime Version 24.1std.0 Build 1077 03/04/2025 SC Lite Edition
 
 
@@ -92,23 +92,15 @@ on the Quartus Prime software download page.
 +-----------------------+---------------------------------------------------------+
 
 
-+------------------------------------------+
-; Parallel Compilation                     ;
-+----------------------------+-------------+
-; Processors                 ; Number      ;
-+----------------------------+-------------+
-; Number detected on machine ; 4           ;
-; Maximum allowed            ; 4           ;
-;                            ;             ;
-; Average used               ; 1.50        ;
-; Maximum used               ; 4           ;
-;                            ;             ;
-; Usage by Processor         ; % Time Used ;
-;     Processor 1            ; 100.0%      ;
-;     Processor 2            ;  16.9%      ;
-;     Processor 3            ;  16.7%      ;
-;     Processor 4            ;  16.5%      ;
-+----------------------------+-------------+
+Parallel compilation was disabled, but you have multiple processors available. Enable parallel compilation to reduce compilation time.
++-------------------------------------+
+; Parallel Compilation                ;
++----------------------------+--------+
+; Processors                 ; Number ;
++----------------------------+--------+
+; Number detected on machine ; 4      ;
+; Maximum allowed            ; 1      ;
++----------------------------+--------+
 
 
 +-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -128,8 +120,8 @@ on the Quartus Prime software download page.
 +------------+-----------------+--------------------------+------+
 ; Fmax       ; Restricted Fmax ; Clock Name               ; Note ;
 +------------+-----------------+--------------------------+------+
-; 157.16 MHz ; 157.16 MHz      ; CLOCK_50                 ;      ;
-; 297.89 MHz ; 297.89 MHz      ; avconf:cfg|mI2C_CTRL_CLK ;      ;
+; 139.31 MHz ; 139.31 MHz      ; CLOCK_50                 ;      ;
+; 271.22 MHz ; 271.22 MHz      ; avconf:cfg|mI2C_CTRL_CLK ;      ;
 +------------+-----------------+--------------------------+------+
 This panel reports FMAX for every clock in the design, regardless of the user-specified clock periods.  FMAX is only computed for paths where the source and destination registers or ports are driven by the same clock.  Paths of different clocks, including generated clocks, are ignored.  For paths between a clock and its inversion, FMAX is computed as if the rising and falling edges are scaled along with FMAX, such that the duty cycle (in terms of a percentage) is maintained. Altera recommends that you always use clock constraints and other slack reports for sign-off analysis.
 
@@ -145,8 +137,8 @@ HTML report is unavailable in plain text report export.
 +--------------------------+--------+---------------+
 ; Clock                    ; Slack  ; End Point TNS ;
 +--------------------------+--------+---------------+
-; CLOCK_50                 ; -5.058 ; -5.058        ;
-; avconf:cfg|mI2C_CTRL_CLK ; -2.357 ; -134.657      ;
+; CLOCK_50                 ; -4.641 ; -4.641        ;
+; avconf:cfg|mI2C_CTRL_CLK ; -2.687 ; -127.001      ;
 +--------------------------+--------+---------------+
 
 
@@ -155,8 +147,8 @@ HTML report is unavailable in plain text report export.
 +--------------------------+-------+---------------+
 ; Clock                    ; Slack ; End Point TNS ;
 +--------------------------+-------+---------------+
-; CLOCK_50                 ; 0.217 ; 0.000         ;
-; avconf:cfg|mI2C_CTRL_CLK ; 0.448 ; 0.000         ;
+; CLOCK_50                 ; 0.218 ; 0.000         ;
+; avconf:cfg|mI2C_CTRL_CLK ; 0.316 ; 0.000         ;
 +--------------------------+-------+---------------+
 
 
@@ -177,9 +169,9 @@ No paths to report.
 +-----------------------------------------------------------------------------------------+--------+---------------+
 ; Clock                                                                                   ; Slack  ; End Point TNS ;
 +-----------------------------------------------------------------------------------------+--------+---------------+
-; avconf:cfg|mI2C_CTRL_CLK                                                                ; -0.394 ; -37.687       ;
+; avconf:cfg|mI2C_CTRL_CLK                                                                ; -0.394 ; -36.551       ;
 ; driver|Audio_Clock|altpll_component|auto_generated|generic_pll1~FRACTIONAL_PLL|vcoph[0] ; 1.666  ; 0.000         ;
-; CLOCK_50                                                                                ; 8.587  ; 0.000         ;
+; CLOCK_50                                                                                ; 8.746  ; 0.000         ;
 +-----------------------------------------------------------------------------------------+--------+---------------+
 
 
@@ -190,7 +182,7 @@ The design MTBF is not calculated because there are no specified synchronizers i
 Number of Synchronizer Chains Found: 64
 Shortest Synchronizer Chain: 2 Registers
 Fraction of Chains for which MTBFs Could Not be Calculated: 1.000
-Worst Case Available Settling Time: 17.715 ns
+Worst Case Available Settling Time: 17.094 ns
 
 
 
@@ -200,8 +192,8 @@ Worst Case Available Settling Time: 17.715 ns
 +------------+-----------------+--------------------------+------+
 ; Fmax       ; Restricted Fmax ; Clock Name               ; Note ;
 +------------+-----------------+--------------------------+------+
-; 152.0 MHz  ; 152.0 MHz       ; CLOCK_50                 ;      ;
-; 298.86 MHz ; 298.86 MHz      ; avconf:cfg|mI2C_CTRL_CLK ;      ;
+; 135.8 MHz  ; 135.8 MHz       ; CLOCK_50                 ;      ;
+; 276.63 MHz ; 276.63 MHz      ; avconf:cfg|mI2C_CTRL_CLK ;      ;
 +------------+-----------------+--------------------------+------+
 This panel reports FMAX for every clock in the design, regardless of the user-specified clock periods.  FMAX is only computed for paths where the source and destination registers or ports are driven by the same clock.  Paths of different clocks, including generated clocks, are ignored.  For paths between a clock and its inversion, FMAX is computed as if the rising and falling edges are scaled along with FMAX, such that the duty cycle (in terms of a percentage) is maintained. Altera recommends that you always use clock constraints and other slack reports for sign-off analysis.
 
@@ -211,8 +203,8 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +--------------------------+--------+---------------+
 ; Clock                    ; Slack  ; End Point TNS ;
 +--------------------------+--------+---------------+
-; CLOCK_50                 ; -4.997 ; -4.997        ;
-; avconf:cfg|mI2C_CTRL_CLK ; -2.346 ; -130.561      ;
+; CLOCK_50                 ; -4.579 ; -4.579        ;
+; avconf:cfg|mI2C_CTRL_CLK ; -2.615 ; -121.817      ;
 +--------------------------+--------+---------------+
 
 
@@ -221,8 +213,8 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +--------------------------+-------+---------------+
 ; Clock                    ; Slack ; End Point TNS ;
 +--------------------------+-------+---------------+
-; CLOCK_50                 ; 0.199 ; 0.000         ;
-; avconf:cfg|mI2C_CTRL_CLK ; 0.463 ; 0.000         ;
+; CLOCK_50                 ; 0.203 ; 0.000         ;
+; avconf:cfg|mI2C_CTRL_CLK ; 0.290 ; 0.000         ;
 +--------------------------+-------+---------------+
 
 
@@ -243,9 +235,9 @@ No paths to report.
 +-----------------------------------------------------------------------------------------+--------+---------------+
 ; Clock                                                                                   ; Slack  ; End Point TNS ;
 +-----------------------------------------------------------------------------------------+--------+---------------+
-; avconf:cfg|mI2C_CTRL_CLK                                                                ; -0.394 ; -36.760       ;
+; avconf:cfg|mI2C_CTRL_CLK                                                                ; -0.394 ; -36.394       ;
 ; driver|Audio_Clock|altpll_component|auto_generated|generic_pll1~FRACTIONAL_PLL|vcoph[0] ; 1.666  ; 0.000         ;
-; CLOCK_50                                                                                ; 8.568  ; 0.000         ;
+; CLOCK_50                                                                                ; 8.736  ; 0.000         ;
 +-----------------------------------------------------------------------------------------+--------+---------------+
 
 
@@ -256,7 +248,7 @@ The design MTBF is not calculated because there are no specified synchronizers i
 Number of Synchronizer Chains Found: 64
 Shortest Synchronizer Chain: 2 Registers
 Fraction of Chains for which MTBFs Could Not be Calculated: 1.000
-Worst Case Available Settling Time: 17.844 ns
+Worst Case Available Settling Time: 17.223 ns
 
 
 
@@ -266,8 +258,8 @@ Worst Case Available Settling Time: 17.844 ns
 +--------------------------+--------+---------------+
 ; Clock                    ; Slack  ; End Point TNS ;
 +--------------------------+--------+---------------+
-; CLOCK_50                 ; -4.141 ; -4.141        ;
-; avconf:cfg|mI2C_CTRL_CLK ; -1.104 ; -61.106       ;
+; CLOCK_50                 ; -3.856 ; -3.856        ;
+; avconf:cfg|mI2C_CTRL_CLK ; -1.319 ; -55.657       ;
 +--------------------------+--------+---------------+
 
 
@@ -276,8 +268,8 @@ Worst Case Available Settling Time: 17.844 ns
 +--------------------------+-------+---------------+
 ; Clock                    ; Slack ; End Point TNS ;
 +--------------------------+-------+---------------+
-; CLOCK_50                 ; 0.133 ; 0.000         ;
-; avconf:cfg|mI2C_CTRL_CLK ; 0.162 ; 0.000         ;
+; CLOCK_50                 ; 0.135 ; 0.000         ;
+; avconf:cfg|mI2C_CTRL_CLK ; 0.135 ; 0.000         ;
 +--------------------------+-------+---------------+
 
 
@@ -298,9 +290,9 @@ No paths to report.
 +-----------------------------------------------------------------------------------------+-------+---------------+
 ; Clock                                                                                   ; Slack ; End Point TNS ;
 +-----------------------------------------------------------------------------------------+-------+---------------+
-; avconf:cfg|mI2C_CTRL_CLK                                                                ; 0.017 ; 0.000         ;
+; avconf:cfg|mI2C_CTRL_CLK                                                                ; 0.002 ; 0.000         ;
 ; driver|Audio_Clock|altpll_component|auto_generated|generic_pll1~FRACTIONAL_PLL|vcoph[0] ; 1.666 ; 0.000         ;
-; CLOCK_50                                                                                ; 8.681 ; 0.000         ;
+; CLOCK_50                                                                                ; 8.782 ; 0.000         ;
 +-----------------------------------------------------------------------------------------+-------+---------------+
 
 
@@ -311,7 +303,7 @@ The design MTBF is not calculated because there are no specified synchronizers i
 Number of Synchronizer Chains Found: 64
 Shortest Synchronizer Chain: 2 Registers
 Fraction of Chains for which MTBFs Could Not be Calculated: 1.000
-Worst Case Available Settling Time: 18.396 ns
+Worst Case Available Settling Time: 17.985 ns
 
 
 
@@ -321,8 +313,8 @@ Worst Case Available Settling Time: 18.396 ns
 +--------------------------+--------+---------------+
 ; Clock                    ; Slack  ; End Point TNS ;
 +--------------------------+--------+---------------+
-; CLOCK_50                 ; -3.589 ; -3.589        ;
-; avconf:cfg|mI2C_CTRL_CLK ; -0.981 ; -52.350       ;
+; CLOCK_50                 ; -3.331 ; -3.331        ;
+; avconf:cfg|mI2C_CTRL_CLK ; -1.162 ; -47.345       ;
 +--------------------------+--------+---------------+
 
 
@@ -331,8 +323,8 @@ Worst Case Available Settling Time: 18.396 ns
 +--------------------------+-------+---------------+
 ; Clock                    ; Slack ; End Point TNS ;
 +--------------------------+-------+---------------+
-; CLOCK_50                 ; 0.121 ; 0.000         ;
-; avconf:cfg|mI2C_CTRL_CLK ; 0.152 ; 0.000         ;
+; avconf:cfg|mI2C_CTRL_CLK ; 0.104 ; 0.000         ;
+; CLOCK_50                 ; 0.123 ; 0.000         ;
 +--------------------------+-------+---------------+
 
 
@@ -353,9 +345,9 @@ No paths to report.
 +-----------------------------------------------------------------------------------------+-------+---------------+
 ; Clock                                                                                   ; Slack ; End Point TNS ;
 +-----------------------------------------------------------------------------------------+-------+---------------+
-; avconf:cfg|mI2C_CTRL_CLK                                                                ; 0.060 ; 0.000         ;
+; avconf:cfg|mI2C_CTRL_CLK                                                                ; 0.034 ; 0.000         ;
 ; driver|Audio_Clock|altpll_component|auto_generated|generic_pll1~FRACTIONAL_PLL|vcoph[0] ; 1.666 ; 0.000         ;
-; CLOCK_50                                                                                ; 8.712 ; 0.000         ;
+; CLOCK_50                                                                                ; 8.777 ; 0.000         ;
 +-----------------------------------------------------------------------------------------+-------+---------------+
 
 
@@ -366,7 +358,7 @@ The design MTBF is not calculated because there are no specified synchronizers i
 Number of Synchronizer Chains Found: 64
 Shortest Synchronizer Chain: 2 Registers
 Fraction of Chains for which MTBFs Could Not be Calculated: 1.000
-Worst Case Available Settling Time: 18.584 ns
+Worst Case Available Settling Time: 18.210 ns
 
 
 
@@ -376,13 +368,13 @@ Worst Case Available Settling Time: 18.584 ns
 +------------------------------------------------------------------------------------------+----------+-------+----------+---------+---------------------+
 ; Clock                                                                                    ; Setup    ; Hold  ; Recovery ; Removal ; Minimum Pulse Width ;
 +------------------------------------------------------------------------------------------+----------+-------+----------+---------+---------------------+
-; Worst-case Slack                                                                         ; -5.058   ; 0.121 ; N/A      ; N/A     ; -0.394              ;
-;  CLOCK_50                                                                                ; -5.058   ; 0.121 ; N/A      ; N/A     ; 8.568               ;
-;  avconf:cfg|mI2C_CTRL_CLK                                                                ; -2.357   ; 0.152 ; N/A      ; N/A     ; -0.394              ;
+; Worst-case Slack                                                                         ; -4.641   ; 0.104 ; N/A      ; N/A     ; -0.394              ;
+;  CLOCK_50                                                                                ; -4.641   ; 0.123 ; N/A      ; N/A     ; 8.736               ;
+;  avconf:cfg|mI2C_CTRL_CLK                                                                ; -2.687   ; 0.104 ; N/A      ; N/A     ; -0.394              ;
 ;  driver|Audio_Clock|altpll_component|auto_generated|generic_pll1~FRACTIONAL_PLL|vcoph[0] ; N/A      ; N/A   ; N/A      ; N/A     ; 1.666               ;
-; Design-wide TNS                                                                          ; -139.715 ; 0.0   ; 0.0      ; 0.0     ; -37.687             ;
-;  CLOCK_50                                                                                ; -5.058   ; 0.000 ; N/A      ; N/A     ; 0.000               ;
-;  avconf:cfg|mI2C_CTRL_CLK                                                                ; -134.657 ; 0.000 ; N/A      ; N/A     ; -37.687             ;
+; Design-wide TNS                                                                          ; -131.642 ; 0.0   ; 0.0      ; 0.0     ; -36.551             ;
+;  CLOCK_50                                                                                ; -4.641   ; 0.000 ; N/A      ; N/A     ; 0.000               ;
+;  avconf:cfg|mI2C_CTRL_CLK                                                                ; -127.001 ; 0.000 ; N/A      ; N/A     ; -36.551             ;
 ;  driver|Audio_Clock|altpll_component|auto_generated|generic_pll1~FRACTIONAL_PLL|vcoph[0] ; N/A      ; N/A   ; N/A      ; N/A     ; 0.000               ;
 +------------------------------------------------------------------------------------------+----------+-------+----------+---------+---------------------+
 
@@ -912,9 +904,9 @@ Worst Case Available Settling Time: 18.584 ns
 +--------------------------+--------------------------+----------+----------+----------+----------+
 ; From Clock               ; To Clock                 ; RR Paths ; FR Paths ; RF Paths ; FF Paths ;
 +--------------------------+--------------------------+----------+----------+----------+----------+
-; avconf:cfg|mI2C_CTRL_CLK ; avconf:cfg|mI2C_CTRL_CLK ; 723      ; 0        ; 0        ; 0        ;
+; avconf:cfg|mI2C_CTRL_CLK ; avconf:cfg|mI2C_CTRL_CLK ; 711      ; 0        ; 0        ; 0        ;
 ; avconf:cfg|mI2C_CTRL_CLK ; CLOCK_50                 ; 1        ; 1        ; 0        ; 0        ;
-; CLOCK_50                 ; CLOCK_50                 ; 3408     ; 0        ; 0        ; 0        ;
+; CLOCK_50                 ; CLOCK_50                 ; 3381     ; 0        ; 0        ; 0        ;
 +--------------------------+--------------------------+----------+----------+----------+----------+
 Entries labeled "false path" only account for clock-to-clock false paths and not path-based false paths. As a result, actual path counts may be lower than reported.
 
@@ -924,9 +916,9 @@ Entries labeled "false path" only account for clock-to-clock false paths and not
 +--------------------------+--------------------------+----------+----------+----------+----------+
 ; From Clock               ; To Clock                 ; RR Paths ; FR Paths ; RF Paths ; FF Paths ;
 +--------------------------+--------------------------+----------+----------+----------+----------+
-; avconf:cfg|mI2C_CTRL_CLK ; avconf:cfg|mI2C_CTRL_CLK ; 723      ; 0        ; 0        ; 0        ;
+; avconf:cfg|mI2C_CTRL_CLK ; avconf:cfg|mI2C_CTRL_CLK ; 711      ; 0        ; 0        ; 0        ;
 ; avconf:cfg|mI2C_CTRL_CLK ; CLOCK_50                 ; 1        ; 1        ; 0        ; 0        ;
-; CLOCK_50                 ; CLOCK_50                 ; 3408     ; 0        ; 0        ; 0        ;
+; CLOCK_50                 ; CLOCK_50                 ; 3381     ; 0        ; 0        ; 0        ;
 +--------------------------+--------------------------+----------+----------+----------+----------+
 Entries labeled "false path" only account for clock-to-clock false paths and not path-based false paths. As a result, actual path counts may be lower than reported.
 
@@ -951,7 +943,7 @@ No non-DPA dedicated SERDES Receiver circuitry present in device or used in desi
 ; Illegal Clocks                  ; 0     ; 0    ;
 ; Unconstrained Clocks            ; 0     ; 0    ;
 ; Unconstrained Input Ports       ; 8     ; 8    ;
-; Unconstrained Input Port Paths  ; 375   ; 375  ;
+; Unconstrained Input Port Paths  ; 373   ; 373  ;
 ; Unconstrained Output Ports      ; 5     ; 5    ;
 ; Unconstrained Output Port Paths ; 12    ; 12   ;
 +---------------------------------+-------+------+
@@ -1033,11 +1025,10 @@ No non-DPA dedicated SERDES Receiver circuitry present in device or used in desi
 Info: *******************************************************************
 Info: Running Quartus Prime Timing Analyzer
     Info: Version 24.1std.0 Build 1077 03/04/2025 SC Lite Edition
-    Info: Processing started: Wed Feb 18 13:04:51 2026
+    Info: Processing started: Wed Feb 18 13:13:23 2026
 Info: Command: quartus_sta IC_Hackathon_Audio -c IC_Hackathon_Audio
 Info: qsta_default_script.tcl version: #1
-Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
-Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
+Warning (12473): User specified to use only one processors but 4 processors were detected which could be used to decrease run time.
 Info (21077): Low junction temperature is 0 degrees C
 Info (21077): High junction temperature is 85 degrees C
 Critical Warning (332012): Synopsys Design Constraints File file not found: 'IC_Hackathon_Audio.sdc'. A Synopsys Design Constraints File is required by the Timing Analyzer to get proper timing constraints. Without it, the Compiler will not properly optimize the design.
@@ -1059,30 +1050,30 @@ Info: Found TIMING_ANALYZER_REPORT_SCRIPT_INCLUDE_DEFAULT_ANALYSIS = ON
 Info: Analyzing Slow 1100mV 85C Model
 Critical Warning (332148): Timing requirements not met
     Info (11105): For recommendations on closing timing, run Report Timing Closure Recommendations in the Timing Analyzer.
-Info (332146): Worst-case setup slack is -5.058
+Info (332146): Worst-case setup slack is -4.641
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -5.058              -5.058 CLOCK_50 
-    Info (332119):    -2.357            -134.657 avconf:cfg|mI2C_CTRL_CLK 
-Info (332146): Worst-case hold slack is 0.217
+    Info (332119):    -4.641              -4.641 CLOCK_50 
+    Info (332119):    -2.687            -127.001 avconf:cfg|mI2C_CTRL_CLK 
+Info (332146): Worst-case hold slack is 0.218
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.217               0.000 CLOCK_50 
-    Info (332119):     0.448               0.000 avconf:cfg|mI2C_CTRL_CLK 
+    Info (332119):     0.218               0.000 CLOCK_50 
+    Info (332119):     0.316               0.000 avconf:cfg|mI2C_CTRL_CLK 
 Info (332140): No Recovery paths to report
 Info (332140): No Removal paths to report
 Info (332146): Worst-case minimum pulse width slack is -0.394
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -0.394             -37.687 avconf:cfg|mI2C_CTRL_CLK 
+    Info (332119):    -0.394             -36.551 avconf:cfg|mI2C_CTRL_CLK 
     Info (332119):     1.666               0.000 driver|Audio_Clock|altpll_component|auto_generated|generic_pll1~FRACTIONAL_PLL|vcoph[0] 
-    Info (332119):     8.587               0.000 CLOCK_50 
+    Info (332119):     8.746               0.000 CLOCK_50 
 Info (332114): Report Metastability: Found 64 synchronizer chains.
     Info (332114): The design MTBF is not calculated because there are no specified synchronizers in the design.
     Info (332114): Number of Synchronizer Chains Found: 64
     Info (332114): Shortest Synchronizer Chain: 2 Registers
     Info (332114): Fraction of Chains for which MTBFs Could Not be Calculated: 1.000
-    Info (332114): Worst Case Available Settling Time: 17.715 ns
+    Info (332114): Worst Case Available Settling Time: 17.094 ns
     Info (332114): 
 Info: Analyzing Slow 1100mV 0C Model
 Info (334003): Started post-fitting delay annotation
@@ -1094,30 +1085,30 @@ Info (332097): The following timing edges are non-unate.  The Timing Analyzer wi
 Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in the Timing Analyzer to see clock uncertainties.
 Critical Warning (332148): Timing requirements not met
     Info (11105): For recommendations on closing timing, run Report Timing Closure Recommendations in the Timing Analyzer.
-Info (332146): Worst-case setup slack is -4.997
+Info (332146): Worst-case setup slack is -4.579
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -4.997              -4.997 CLOCK_50 
-    Info (332119):    -2.346            -130.561 avconf:cfg|mI2C_CTRL_CLK 
-Info (332146): Worst-case hold slack is 0.199
+    Info (332119):    -4.579              -4.579 CLOCK_50 
+    Info (332119):    -2.615            -121.817 avconf:cfg|mI2C_CTRL_CLK 
+Info (332146): Worst-case hold slack is 0.203
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.199               0.000 CLOCK_50 
-    Info (332119):     0.463               0.000 avconf:cfg|mI2C_CTRL_CLK 
+    Info (332119):     0.203               0.000 CLOCK_50 
+    Info (332119):     0.290               0.000 avconf:cfg|mI2C_CTRL_CLK 
 Info (332140): No Recovery paths to report
 Info (332140): No Removal paths to report
 Info (332146): Worst-case minimum pulse width slack is -0.394
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -0.394             -36.760 avconf:cfg|mI2C_CTRL_CLK 
+    Info (332119):    -0.394             -36.394 avconf:cfg|mI2C_CTRL_CLK 
     Info (332119):     1.666               0.000 driver|Audio_Clock|altpll_component|auto_generated|generic_pll1~FRACTIONAL_PLL|vcoph[0] 
-    Info (332119):     8.568               0.000 CLOCK_50 
+    Info (332119):     8.736               0.000 CLOCK_50 
 Info (332114): Report Metastability: Found 64 synchronizer chains.
     Info (332114): The design MTBF is not calculated because there are no specified synchronizers in the design.
     Info (332114): Number of Synchronizer Chains Found: 64
     Info (332114): Shortest Synchronizer Chain: 2 Registers
     Info (332114): Fraction of Chains for which MTBFs Could Not be Calculated: 1.000
-    Info (332114): Worst Case Available Settling Time: 17.844 ns
+    Info (332114): Worst Case Available Settling Time: 17.223 ns
     Info (332114): 
 Info: Analyzing Fast 1100mV 85C Model
 Info (334003): Started post-fitting delay annotation
@@ -1129,30 +1120,30 @@ Info (332097): The following timing edges are non-unate.  The Timing Analyzer wi
 Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in the Timing Analyzer to see clock uncertainties.
 Critical Warning (332148): Timing requirements not met
     Info (11105): For recommendations on closing timing, run Report Timing Closure Recommendations in the Timing Analyzer.
-Info (332146): Worst-case setup slack is -4.141
+Info (332146): Worst-case setup slack is -3.856
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -4.141              -4.141 CLOCK_50 
-    Info (332119):    -1.104             -61.106 avconf:cfg|mI2C_CTRL_CLK 
-Info (332146): Worst-case hold slack is 0.133
+    Info (332119):    -3.856              -3.856 CLOCK_50 
+    Info (332119):    -1.319             -55.657 avconf:cfg|mI2C_CTRL_CLK 
+Info (332146): Worst-case hold slack is 0.135
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.133               0.000 CLOCK_50 
-    Info (332119):     0.162               0.000 avconf:cfg|mI2C_CTRL_CLK 
+    Info (332119):     0.135               0.000 CLOCK_50 
+    Info (332119):     0.135               0.000 avconf:cfg|mI2C_CTRL_CLK 
 Info (332140): No Recovery paths to report
 Info (332140): No Removal paths to report
-Info (332146): Worst-case minimum pulse width slack is 0.017
+Info (332146): Worst-case minimum pulse width slack is 0.002
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.017               0.000 avconf:cfg|mI2C_CTRL_CLK 
+    Info (332119):     0.002               0.000 avconf:cfg|mI2C_CTRL_CLK 
     Info (332119):     1.666               0.000 driver|Audio_Clock|altpll_component|auto_generated|generic_pll1~FRACTIONAL_PLL|vcoph[0] 
-    Info (332119):     8.681               0.000 CLOCK_50 
+    Info (332119):     8.782               0.000 CLOCK_50 
 Info (332114): Report Metastability: Found 64 synchronizer chains.
     Info (332114): The design MTBF is not calculated because there are no specified synchronizers in the design.
     Info (332114): Number of Synchronizer Chains Found: 64
     Info (332114): Shortest Synchronizer Chain: 2 Registers
     Info (332114): Fraction of Chains for which MTBFs Could Not be Calculated: 1.000
-    Info (332114): Worst Case Available Settling Time: 18.396 ns
+    Info (332114): Worst Case Available Settling Time: 17.985 ns
     Info (332114): 
 Info: Analyzing Fast 1100mV 0C Model
 Info (332097): The following timing edges are non-unate.  The Timing Analyzer will assume pos-unate behavior for these edges in the clock network.
@@ -1162,37 +1153,37 @@ Info (332097): The following timing edges are non-unate.  The Timing Analyzer wi
 Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in the Timing Analyzer to see clock uncertainties.
 Critical Warning (332148): Timing requirements not met
     Info (11105): For recommendations on closing timing, run Report Timing Closure Recommendations in the Timing Analyzer.
-Info (332146): Worst-case setup slack is -3.589
+Info (332146): Worst-case setup slack is -3.331
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -3.589              -3.589 CLOCK_50 
-    Info (332119):    -0.981             -52.350 avconf:cfg|mI2C_CTRL_CLK 
-Info (332146): Worst-case hold slack is 0.121
+    Info (332119):    -3.331              -3.331 CLOCK_50 
+    Info (332119):    -1.162             -47.345 avconf:cfg|mI2C_CTRL_CLK 
+Info (332146): Worst-case hold slack is 0.104
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.121               0.000 CLOCK_50 
-    Info (332119):     0.152               0.000 avconf:cfg|mI2C_CTRL_CLK 
+    Info (332119):     0.104               0.000 avconf:cfg|mI2C_CTRL_CLK 
+    Info (332119):     0.123               0.000 CLOCK_50 
 Info (332140): No Recovery paths to report
 Info (332140): No Removal paths to report
-Info (332146): Worst-case minimum pulse width slack is 0.060
+Info (332146): Worst-case minimum pulse width slack is 0.034
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.060               0.000 avconf:cfg|mI2C_CTRL_CLK 
+    Info (332119):     0.034               0.000 avconf:cfg|mI2C_CTRL_CLK 
     Info (332119):     1.666               0.000 driver|Audio_Clock|altpll_component|auto_generated|generic_pll1~FRACTIONAL_PLL|vcoph[0] 
-    Info (332119):     8.712               0.000 CLOCK_50 
+    Info (332119):     8.777               0.000 CLOCK_50 
 Info (332114): Report Metastability: Found 64 synchronizer chains.
     Info (332114): The design MTBF is not calculated because there are no specified synchronizers in the design.
     Info (332114): Number of Synchronizer Chains Found: 64
     Info (332114): Shortest Synchronizer Chain: 2 Registers
     Info (332114): Fraction of Chains for which MTBFs Could Not be Calculated: 1.000
-    Info (332114): Worst Case Available Settling Time: 18.584 ns
+    Info (332114): Worst Case Available Settling Time: 18.210 ns
     Info (332114): 
 Info (332102): Design is not fully constrained for setup requirements
 Info (332102): Design is not fully constrained for hold requirements
 Info: Quartus Prime Timing Analyzer was successful. 0 errors, 6 warnings
-    Info: Peak virtual memory: 1196 megabytes
-    Info: Processing ended: Wed Feb 18 13:05:03 2026
-    Info: Elapsed time: 00:00:12
+    Info: Peak virtual memory: 1146 megabytes
+    Info: Processing ended: Wed Feb 18 13:13:37 2026
+    Info: Elapsed time: 00:00:14
     Info: Total CPU time (on all processors): 00:00:14
 
 

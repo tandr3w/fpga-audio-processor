@@ -1,5 +1,5 @@
 EDA Netlist Writer report for IC_Hackathon_Audio
-Wed Feb 18 13:05:09 2026
+Wed Feb 18 13:13:42 2026
 Quartus Prime Version 24.1std.0 Build 1077 03/04/2025 SC Lite Edition
 
 
@@ -37,7 +37,7 @@ on the Quartus Prime software download page.
 +-------------------------------------------------------------------+
 ; EDA Netlist Writer Summary                                        ;
 +---------------------------+---------------------------------------+
-; EDA Netlist Writer Status ; Successful - Wed Feb 18 13:05:09 2026 ;
+; EDA Netlist Writer Status ; Successful - Wed Feb 18 13:13:42 2026 ;
 ; Revision Name             ; IC_Hackathon_Audio                    ;
 ; Top-level Entity Name     ; de1soc_wrapper                        ;
 ; Family                    ; Cyclone V                             ;
@@ -81,13 +81,12 @@ on the Quartus Prime software download page.
 Info: *******************************************************************
 Info: Running Quartus Prime EDA Netlist Writer
     Info: Version 24.1std.0 Build 1077 03/04/2025 SC Lite Edition
-    Info: Processing started: Wed Feb 18 13:05:06 2026
+    Info: Processing started: Wed Feb 18 13:13:40 2026
 Info: Command: quartus_eda --read_settings_files=off --write_settings_files=off IC_Hackathon_Audio -c IC_Hackathon_Audio
-Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (204019): Generated file IC_Hackathon_Audio.svo in folder "/home/andrew/Shared/ic-hackathon-thing/simulation/questa/" for EDA simulation tool
-Info: Quartus Prime EDA Netlist Writer was successful. 0 errors, 1 warning
+Info: Quartus Prime EDA Netlist Writer was successful. 0 errors, 0 warnings
     Info: Peak virtual memory: 1108 megabytes
-    Info: Processing ended: Wed Feb 18 13:05:09 2026
+    Info: Processing ended: Wed Feb 18 13:13:43 2026
     Info: Elapsed time: 00:00:03
     Info: Total CPU time (on all processors): 00:00:02
 
