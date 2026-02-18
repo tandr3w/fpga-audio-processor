@@ -23,13 +23,13 @@ always_ff @(posedge CLOCK_50) begin
 
     if (audio_in_available && audio_out_allowed) begin
         // Get audio input
-        l_processed = audio_in_L;
-        r_processed = audio_in_R;
+        l_processed <= audio_in_L;
+        r_processed <= audio_in_R;
 
         // Apply effects based on switches
         if (SW[0]) begin
-            l_processed = 0;
-            r_processed = 0;
+            l_processed <= 0;
+            r_processed <= 0;
         end
 
         // Output processed audio channels

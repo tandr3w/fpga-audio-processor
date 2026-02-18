@@ -2,23 +2,16 @@
 
 module tb;
 
-    // 1. Signal Declaration
-    // Inputs to top
+    // --- Signal Declarations ---
     logic CLOCK_50;
     logic [9:0] SW;
     logic audio_in_available;
     logic audio_out_allowed;
-    logic signed [31:0] audio_in_L;
-    logic signed [31:0] audio_in_R;
+    logic signed [31:0] audio_in_L, audio_in_R;
+    logic read_audio_in, write_audio_out;
+    logic signed [31:0] audio_out_L, audio_out_R;
 
-    // Outputs from top
-    logic read_audio_in;
-    logic write_audio_out;
-    logic signed [31:0] audio_out_L;
-    logic signed [31:0] audio_out_R;
-
-    // 2. Instantiate the Unit Under Test (UUT)
-    // Make sure port names match your top.sv exactly
+    // --- UUT Instantiation ---
     top uut (
         .CLOCK_50(CLOCK_50),
         .SW(SW),
@@ -32,102 +25,18 @@ module tb;
         .audio_out_R(audio_out_R)
     );
 
-    // 3. Clock Generation (50 MHz)
-    // Period = 20ns (1s / 50,000,000)
+    // --- Clock Generation ---
     initial begin
         CLOCK_50 = 0;
         forever #10 CLOCK_50 = ~CLOCK_50;
     end
 
-    // 4. Test Procedure
+    // --- MAIN TEST SEQUENCE ---
     initial begin
-        // --- Setup for Waveform Viewing ---
-        // These lines are critical for the GitHub Action to generate waves
         $dumpfile("sim_out/wave.vcd");
         $dumpvars(0, tb);
 
-        // --- Initialize Inputs ---
-        SW = 10'd0;                // All switches OFF
-        audio_in_available = 0;
-        audio_out_allowed = 0;
-        audio_in_L = 0;
-        audio_in_R = 0;
-
-        // Wait for global reset/startup (100ns)
-        #100;
-        $display("--- Simulation Start ---");
-
-        // ============================================================
-        // TEST CASE 1: Normal Audio Passthrough (Switch 0 is OFF)
-        // ============================================================
-        $display("Test 1: Normal Passthrough (Input: 1000 -> Output: Should be 1000)");
-        
-        // 1. Set Audio Data
-        audio_in_L = 32'd1000;
-        audio_in_R = -32'd1000; // Test negative numbers too
-
-        // 2. Raise Handshake Flags (Simulate Controller saying "Ready")
-        @(posedge CLOCK_50);
-        audio_in_available = 1;
-        audio_out_allowed = 1;
-
-        // 3. Wait for 'top' to respond with read/write signals
-        wait(read_audio_in == 1 && write_audio_out == 1);
-        
-        // 4. Wait one clock cycle for the logic to latch the data
-        @(posedge CLOCK_50);
-
-        // 5. Check Results (Self-Checking)
-        if (audio_out_L == 1000 && audio_out_R == -1000) 
-            $display("  -> PASS: Audio passed through correctly.");
-        else 
-            $display("  -> FAIL: Expected 1000/-1000, got %d/%d", audio_out_L, audio_out_R);
-
-        // 6. Reset Handshake (Simulate Controller finishing the transfer)
-        audio_in_available = 0;
-        audio_out_allowed = 0;
-        #50; // Wait a bit between tests
-
-        // ============================================================
-        // TEST CASE 2: Mute Function (Switch 0 is ON)
-        // ============================================================
-        $display("Test 2: Mute Function (Input: 5000 -> Output: Should be 0)");
-
-        // 1. Turn on Mute Switch
-        SW[0] = 1; 
-
-        // 2. Set Audio Data
-        audio_in_L = 32'd5000;
-        audio_in_R = 32'd5000;
-
-        // 3. Raise Handshake Flags
-        @(posedge CLOCK_50);
-        audio_in_available = 1;
-        audio_out_allowed = 1;
-
-        // 4. Wait for logic to trigger
-        wait(read_audio_in == 1);
-        @(posedge CLOCK_50); // Clock edge to latch data
-
-        // 5. Check Results
-        if (audio_out_L == 0 && audio_out_R == 0)
-            $display("  -> PASS: Audio muted correctly.");
-        else
-            $display("  -> FAIL: Expected 0, got %d/%d", audio_out_L, audio_out_R);
-
-        // 6. Cleanup
-        audio_in_available = 0;
-        audio_out_allowed = 0;
-        
-        $display("--- Simulation End ---");
-        $finish;
-    end
-    
-    initial begin
-        $dumpfile("sim_out/wave.vcd");
-        $dumpvars(0, data_valadity);
-
-        // Initialize
+        // 1. Initialize
         SW = 0;
         audio_in_available = 0;
         audio_out_allowed = 0;
@@ -135,37 +44,99 @@ module tb;
         audio_in_R = 0;
         #100;
 
-        $display("TEST: Checking for Timing Mismatch...");
-        
-        // 1. Setup Input Data
-        audio_in_L = 32'hDEADBEEF; // A distinctive number
-        audio_in_R = 32'hDEADBEEF;
+        $display("--- Simulation Start ---");
 
-        // 2. Trigger the Handshake
-        // We simulate the driver saying "I'm ready"
+        // ============================================================
+        // TEST 1: Passthrough
+        // ============================================================
+        $display("\nTest 1: Normal Passthrough");
+        
+        // Setup
+        audio_in_L = 32'd1000;
+        audio_in_R = -32'd1000;
+
+        // Handshake
         @(posedge CLOCK_50);
         audio_in_available = 1;
         audio_out_allowed = 1;
 
-        // 3. Wait for YOUR module to say "Write Now"
+        // Wait for Logic to respond
+        wait(read_audio_in == 1);
+        @(posedge CLOCK_50); // Latch Data
+
+        // Verify
+        if (audio_out_L == 1000 && audio_out_R == -1000) 
+            $display("  -> PASS");
+        else 
+            $display("  -> FAIL: Got %d / %d", audio_out_L, audio_out_R);
+
+        // Reset
+        audio_in_available = 0;
+        audio_out_allowed = 0;
+        #50;
+
+        // ============================================================
+        // TEST 2: Mute
+        // ============================================================
+        $display("\nTest 2: Mute Function");
+
+        // Setup
+        SW[0] = 1; 
+        audio_in_L = 32'd5000;
+        audio_in_R = 32'd5000;
+
+        // Handshake
+        @(posedge CLOCK_50);
+        audio_in_available = 1;
+        audio_out_allowed = 1;
+
+        // Wait
+        wait(read_audio_in == 1);
+        @(posedge CLOCK_50);
+
+        // Verify
+        if (audio_out_L == 0)
+            $display("  -> PASS");
+        else
+            $display("  -> FAIL: Got %d", audio_out_L);
+
+        // Reset
+        SW[0] = 0; // Turn mute off for next test
+        audio_in_available = 0;
+        audio_out_allowed = 0;
+        #50;
+
+        // ============================================================
+        // TEST 3: Pipeline Timing Check (The "Trap")
+        // ============================================================
+        $display("\nTest 3: Checking for Sequential Timing Accuracy");
+        
+        // Setup distinctive data
+        audio_in_L = 32'hDEADBEEF;
+        audio_in_R = 32'hDEADBEEF;
+
+        // Handshake
+        @(posedge CLOCK_50);
+        audio_in_available = 1;
+        audio_out_allowed = 1;
+
+        // Wait for the WRITE signal
         wait(write_audio_out == 1);
         
-        // 4. Sample the data at the EXACT moment you requested the write.
-        // This is when the real Audio Controller would grab the data.
+        // Sample at the exact moment WRITE goes high
+        // If your logic is sequential, data should be ready NOW.
         @(posedge CLOCK_50); 
 
-        // 5. Verify
-        if (audio_out_L !== 32'hDEADBEEF) begin
-            $display("!!! FAIL !!!");
-            $display("Timing Error Detected:");
-            $display("You asserted 'write_audio_out' (I grabbed data).");
-            $display("EXPECTED: %h", 32'hDEADBEEF);
-            $display("ACTUAL:   %h (Likely 0 or X)", audio_out_L);
-            $display("Reason: Your 'write' signal arrived 1 cycle BEFORE your data.");
+        // Verify
+        if (audio_out_L === 32'hDEADBEEF) begin
+            $display("  -> PASS: Data valid exactly when Write asserted.");
         end else begin
-            $display("PASS: Data was ready.");
+            $display("  -> FAIL: Timing Mismatch!");
+            $display("     Expected: DEADBEEF");
+            $display("     Got:      %h", audio_out_L);
         end
 
+        $display("\n--- Simulation End ---");
         $finish;
     end
 
