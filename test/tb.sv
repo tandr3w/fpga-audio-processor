@@ -448,10 +448,4 @@ module tb;
         $finish;
     end
 
-    // Waveform dump
-    initial begin
-        $dumpfile("dumpfile.fst");
-        $dumpvars(0);
-    end
-
 endmodule
