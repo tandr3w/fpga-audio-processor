@@ -1,7 +1,6 @@
 --- Simulation Start ---
 Test 1: Normal Passthrough (Input: 1000 -> Output: Should be 1000)
-  -> PASS: Audio passed through correctly.
-Test 2: Mute Function (Input: 5000 -> Output: Should be 0)
-  -> PASS: Audio muted correctly.
---- Simulation End ---
-- test/tb.sv:123: Verilog $finish
+TEST: Checking for Timing Mismatch...
+  -> FAIL: Expected 1000/-1000, got  -559038737/ -559038737
+PASS: Data was ready.
+- test/tb.sv:169: Verilog $finish
