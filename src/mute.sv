@@ -1,3 +1,5 @@
+`timescale 1ns/100ps
+
 module mute_effect (
     input  logic              enable, // The switch
     input  logic signed [31:0] in_L, in_R,

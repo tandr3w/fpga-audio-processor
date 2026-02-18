@@ -86,7 +86,7 @@ def hex_to_wav():
     audio_data = np.column_stack((left_channel, right_channel)).astype(np.int16)
     
     # Save file (48kHz matches the DE1-SoC Audio Core clock)
-    wavfile.write(OUTPUT_WAV, 48000, audio_data) # TODO: Allow this to be set in the command line
+    wavfile.write(OUTPUT_WAV, 44100, audio_data) # TODO: Allow this to be set in the command line
     print(f"Done. Saved {len(left_channel)} samples to {OUTPUT_WAV}.")
 
 if __name__ == "__main__":

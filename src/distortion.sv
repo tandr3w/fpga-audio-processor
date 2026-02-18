@@ -1,3 +1,5 @@
+`timescale 1ns/100ps
+
 module distortion (
     input  logic              CLOCK_50,      // Clock (optional, but good practice for future sync)
     input  logic              enable,   // SW[x]
