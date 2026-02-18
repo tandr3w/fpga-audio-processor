@@ -1,12 +1,13 @@
 # --- OS Junk Files ---
 .DS_Store
 Thumbs.db
-
+*.yml
 # --- Quartus Internal Databases (CRITICAL TO IGNORE) ---
 # These are huge and auto-generated. Never commit them.
 /db/
 /incremental_db/
 /greybox_tmp/
+/work/
 
 # --- Compilation Outputs ---
 # These are the results of your build. Do not track them.
