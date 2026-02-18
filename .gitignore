@@ -1,0 +1,37 @@
+# --- OS Junk Files ---
+.DS_Store
+Thumbs.db
+
+# --- Quartus Internal Databases (CRITICAL TO IGNORE) ---
+# These are huge and auto-generated. Never commit them.
+/db/
+/incremental_db/
+/greybox_tmp/
+
+# --- Compilation Outputs ---
+# These are the results of your build. Do not track them.
+/output_files/
+/simulation/
+*.sof
+*.pof
+*.sjam
+*.done
+*.rpt
+*.summary
+*.jdi
+*.pin
+
+# --- Quartus User Settings & Backups ---
+# *.qws contains your personal window layout/colors.
+# *.bak are backup files created when you save.
+*.qws
+*.bak
+*.qky
+
+# --- Specific Trash from your screenshot ---
+c5_pin_model_dump.txt
+
+# --- Keep these! (Documentation for you) ---
+# !*.qpf
+# !*.qsf
+# !pins.tcl
