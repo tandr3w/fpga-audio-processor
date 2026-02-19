@@ -5,33 +5,33 @@ TEST START
 
 Test 1: Normal Passthrough
   -> FAIL: Basic passthrough
-LOG: 1300 : ERROR : tb : uut.audio_out_L : expected_value: 1000 actual_value: 1024000
-LOG: 1300 : ERROR : tb : uut.audio_out_R : expected_value: -1000 actual_value: -1024000
+LOG: 1300 : ERROR : tb : uut.audio_out_L : expected_value: 1000 actual_value: 0
+LOG: 1300 : ERROR : tb : uut.audio_out_R : expected_value: -1000 actual_value: 0
 
 Test 2: Mute Function
-  -> PASS: Mute both channels
-LOG: 2100 : INFO : tb : uut.audio_out_L : expected_value: 0 actual_value: 0
-LOG: 2100 : INFO : tb : uut.audio_out_R : expected_value: 0 actual_value: 0
+  -> FAIL: Mute both channels
+LOG: 2100 : ERROR : tb : uut.audio_out_L : expected_value: 0 actual_value: 1000
+LOG: 2100 : ERROR : tb : uut.audio_out_R : expected_value: 0 actual_value: -1000
 
 Test 3: Sequential Timing Accuracy
   -> FAIL: Timing check
-LOG: 2900 : ERROR : tb : uut.audio_out_L : expected_value: -559038737 actual_value: -1225016320
-LOG: 2900 : ERROR : tb : uut.audio_out_R : expected_value: -559038737 actual_value: -1225016320
+LOG: 2900 : ERROR : tb : uut.audio_out_L : expected_value: -559038737 actual_value: 5000
+LOG: 2900 : ERROR : tb : uut.audio_out_R : expected_value: -559038737 actual_value: 5000
 
 Test 4: Maximum Positive Values
   -> FAIL: Max positive values
-LOG: 3700 : ERROR : tb : uut.audio_out_L : expected_value: 2147483647 actual_value: -1024
-LOG: 3700 : ERROR : tb : uut.audio_out_R : expected_value: 2147483647 actual_value: -1024
+LOG: 3700 : ERROR : tb : uut.audio_out_L : expected_value: 2147483647 actual_value: -559038737
+LOG: 3700 : ERROR : tb : uut.audio_out_R : expected_value: 2147483647 actual_value: -559038737
 
 Test 5: Maximum Negative Values
   -> FAIL: Max negative values
-LOG: 4500 : ERROR : tb : uut.audio_out_L : expected_value: -2147483648 actual_value: 0
-LOG: 4500 : ERROR : tb : uut.audio_out_R : expected_value: -2147483648 actual_value: 0
+LOG: 4500 : ERROR : tb : uut.audio_out_L : expected_value: -2147483648 actual_value: 2147483647
+LOG: 4500 : ERROR : tb : uut.audio_out_R : expected_value: -2147483648 actual_value: 2147483647
 
 Test 6: Mute with Maximum Values
-  -> PASS: Mute overrides max values
-LOG: 5300 : INFO : tb : uut.audio_out_L : expected_value: 0 actual_value: 0
-LOG: 5300 : INFO : tb : uut.audio_out_R : expected_value: 0 actual_value: 0
+  -> FAIL: Mute overrides max values
+LOG: 5300 : ERROR : tb : uut.audio_out_L : expected_value: 0 actual_value: -2147483648
+LOG: 5300 : ERROR : tb : uut.audio_out_R : expected_value: 0 actual_value: -2147483648
 
 Test 7: Incomplete Handshake - Only audio_in_available
   -> PASS: Handshake signals remain low
@@ -43,29 +43,29 @@ LOG: 7300 : INFO : tb : uut.write_audio_out : expected_value: 0 actual_value: 0
 
 Test 9: Sequential Audio Samples
   -> FAIL: Sequential sample 1
-LOG: 8100 : ERROR : tb : uut.audio_out_L : expected_value: 100 actual_value: 102400
-LOG: 8100 : ERROR : tb : uut.audio_out_R : expected_value: 200 actual_value: 204800
+LOG: 8100 : ERROR : tb : uut.audio_out_L : expected_value: 100 actual_value: 99999
+LOG: 8100 : ERROR : tb : uut.audio_out_R : expected_value: 200 actual_value: 88888
   -> FAIL: Sequential sample 2
-LOG: 8300 : ERROR : tb : uut.audio_out_L : expected_value: 300 actual_value: 307200
-LOG: 8300 : ERROR : tb : uut.audio_out_R : expected_value: 400 actual_value: 409600
+LOG: 8300 : ERROR : tb : uut.audio_out_L : expected_value: 300 actual_value: 100
+LOG: 8300 : ERROR : tb : uut.audio_out_R : expected_value: 400 actual_value: 200
   -> FAIL: Sequential sample 3
-LOG: 8500 : ERROR : tb : uut.audio_out_L : expected_value: -500 actual_value: -512000
-LOG: 8500 : ERROR : tb : uut.audio_out_R : expected_value: -600 actual_value: -614400
+LOG: 8500 : ERROR : tb : uut.audio_out_L : expected_value: -500 actual_value: 300
+LOG: 8500 : ERROR : tb : uut.audio_out_R : expected_value: -600 actual_value: 400
 
 Test 10: Unused Switches Verification
-  -> PASS: Unused switches don't affect passthrough
-LOG: 9300 : INFO : tb : uut.audio_out_L : expected_value: 7777 actual_value: 7777
-LOG: 9300 : INFO : tb : uut.audio_out_R : expected_value: 8888 actual_value: 8888
+  -> FAIL: Unused switches don't affect passthrough
+LOG: 9300 : ERROR : tb : uut.audio_out_L : expected_value: 7777 actual_value: -500
+LOG: 9300 : ERROR : tb : uut.audio_out_R : expected_value: 8888 actual_value: -600
 
 Test 11: Asymmetric Channel Values
   -> FAIL: Max positive L, max negative R
-LOG: 10100 : ERROR : tb : uut.audio_out_L : expected_value: 2147483647 actual_value: -1024
-LOG: 10100 : ERROR : tb : uut.audio_out_R : expected_value: -2147483648 actual_value: 0
+LOG: 10100 : ERROR : tb : uut.audio_out_L : expected_value: 2147483647 actual_value: 7777
+LOG: 10100 : ERROR : tb : uut.audio_out_R : expected_value: -2147483648 actual_value: 8888
 
 Test 12: Zero Audio Values
-  -> PASS: Zero values passthrough
-LOG: 10900 : INFO : tb : uut.audio_out_L : expected_value: 0 actual_value: 0
-LOG: 10900 : INFO : tb : uut.audio_out_R : expected_value: 0 actual_value: 0
+  -> FAIL: Zero values passthrough
+LOG: 10900 : ERROR : tb : uut.audio_out_L : expected_value: 0 actual_value: 2147483647
+LOG: 10900 : ERROR : tb : uut.audio_out_R : expected_value: 0 actual_value: -2147483648
 
 Test 13: Rapid Handshake Toggling
   -> PASS: Signals deasserted after handshake removed
@@ -73,19 +73,19 @@ LOG: 11900 : INFO : tb : uut.read_audio_in : expected_value: 0 actual_value: 0
 
 Test 14: Mute Toggle During Operation
   -> FAIL: Before mute toggle
-LOG: 12700 : ERROR : tb : uut.audio_out_L : expected_value: 2000 actual_value: 2048000
-LOG: 12700 : ERROR : tb : uut.audio_out_R : expected_value: 3000 actual_value: 3072000
-  -> PASS: After mute enabled
-LOG: 12900 : INFO : tb : uut.audio_out_L : expected_value: 0 actual_value: 0
-LOG: 12900 : INFO : tb : uut.audio_out_R : expected_value: 0 actual_value: 0
+LOG: 12700 : ERROR : tb : uut.audio_out_L : expected_value: 2000 actual_value: 4444
+LOG: 12700 : ERROR : tb : uut.audio_out_R : expected_value: 3000 actual_value: 5555
+  -> FAIL: After mute enabled
+LOG: 12900 : ERROR : tb : uut.audio_out_L : expected_value: 0 actual_value: 2000
+LOG: 12900 : ERROR : tb : uut.audio_out_R : expected_value: 0 actual_value: 3000
   -> FAIL: After mute disabled
-LOG: 13100 : ERROR : tb : uut.audio_out_L : expected_value: 2000 actual_value: 2048000
-LOG: 13100 : ERROR : tb : uut.audio_out_R : expected_value: 3000 actual_value: 3072000
+LOG: 13100 : ERROR : tb : uut.audio_out_L : expected_value: 2000 actual_value: 0
+LOG: 13100 : ERROR : tb : uut.audio_out_R : expected_value: 3000 actual_value: 0
 
 === Test Summary ===
 Total Tests: 18
-Passed:      8
-Failed:      10
+Passed:      3
+Failed:      15
 
 TEST FAILED
 - test/tb.sv:448: Verilog $finish
