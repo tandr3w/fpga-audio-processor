@@ -8,14 +8,12 @@ module mute_effect (
 
     // Combinational Logic (Instant)
     always_comb begin
-        if (enable) begin
-            // Mute active: Silence the output
-            out_L = 32'd0;
-            out_R = 32'd0;
-        end else begin
-            // Mute inactive: Pass the signal through (Bypass)
+        if (!enable) begin
             out_L = in_L;
             out_R = in_R;
+        end else begin
+            out_L = 32'd0;
+            out_R = 32'd0;
         end
     end
 

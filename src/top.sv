@@ -24,11 +24,18 @@ mute_effect master_mute (
     .out_L(mute_out_L),  .out_R(mute_out_R)
 );
 
-distortion dist_L (
+distortion dist_effect (
     .CLOCK_50(CLOCK_50),
     .in_L(mute_out_L), .in_R(mute_out_R),
-    .out_L(l_processed), .out_R(r_processed),
+    .out_L(dist_out_L), .out_R(dist_out_R),
     .enable(SW[1]) // Switch 0 turns it ON
+);
+
+echo echo_effect (
+    .CLOCK_50(CLOCK_50),
+    .in_L(dist_out_L), .in_R(dist_out_R),
+    .out_L(l_processed), .out_R(r_processed),
+    .enable(SW[2]) // Switch 0 turns it ON
 );
 
 always_ff @(posedge CLOCK_50) begin

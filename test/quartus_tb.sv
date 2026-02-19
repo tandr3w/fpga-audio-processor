@@ -47,8 +47,7 @@ module quartus_tb;
         end
 
         // 2. Setup Switches (Turn on Distortion/Echo/etc here!)
-        // SW[0] = 1; // Turn on effect #1 (Vinyl?)
-        SW[1] = 1; // Turn on effect #2 (Distortion?)
+        SW[2] = 1;
         
         // 3. Reset
         #100;
