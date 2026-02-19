@@ -36,8 +36,8 @@ module echo (
             final_L = 35'sh0;
             final_R = 35'sh0;
         end else begin
-            wet_L = (cL1 + cL2 + cL3 + cL4);
-            wet_R = (cR1 + cR2 + cR3 + cR4);
+            wet_L = 34'(cL1) + 34'(cL2) + 34'(cL3) + 34'(cL4);
+            wet_R = 34'(cR1) + 34'(cR2) + 34'(cR3) + 34'(cR4);
 
             final_L = (35'(in_L) >>> 2) + (35'(wet_L) >>> 2);
             final_R = (35'(in_R) >>> 2) + (35'(wet_R) >>> 2);
