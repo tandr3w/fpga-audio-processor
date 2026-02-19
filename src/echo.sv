@@ -22,24 +22,25 @@ module echo (
     comb_filter #(.DEPTH(4337))  cfR3 (.clk(CLOCK_50), .enable(enable), .in(in_R), .out(cR3));
     comb_filter #(.DEPTH(4999))  cfR4 (.clk(CLOCK_50), .enable(enable), .in(in_R), .out(cR4));
 
-    always_comb begin
-        // Declarations up top
-        logic signed [33:0] wet_L, wet_R;
-        logic signed [34:0] final_L, final_R;
-        
-        // 33-bit boundaries
-        localparam signed [34:0] MAX_VAL = 35'sd2147483647;
-        localparam signed [34:0] MIN_VAL = -35'sd2147483648;
+    logic signed [33:0] wet_L, wet_R;
+    logic signed [34:0] final_L, final_R;
+    localparam signed [34:0] MAX_VAL = 35'sd2147483647;
+    localparam signed [34:0] MIN_VAL = -35'sd2147483648;
 
+    always_comb begin
         if (!enable) begin
             out_L = in_L;
             out_R = in_R;
+            wet_L = 34'sh0;
+            wet_R = 34'sh0;
+            final_L = 35'sh0;
+            final_R = 35'sh0;
         end else begin
             wet_L = (cL1 + cL2 + cL3 + cL4);
             wet_R = (cR1 + cR2 + cR3 + cR4);
 
-            final_L = (in_L >>> 2) + (wet_L >>> 2);
-            final_R = (in_R >>> 2) + (wet_R >>> 2);
+            final_L = (35'(in_L) >>> 2) + (35'(wet_L) >>> 2);
+            final_R = (35'(in_R) >>> 2) + (35'(wet_R) >>> 2);
 
             // Ensure output does not pass max/min values for audio and cause wrapping (crackles)
             if (final_L > MAX_VAL)      out_L = 32'h7FFFFFFF;

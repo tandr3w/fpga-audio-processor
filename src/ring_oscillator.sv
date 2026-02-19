@@ -8,7 +8,7 @@ module ring_oscillator #(parameter STAGES = 13) (
 
 `ifndef SYNTHESIS 
     always_ff @(posedge CLOCK_50) begin
-        if (enable) rand_bit <= $urandom; 
+        if (enable) rand_bit <= $urandom & 1'b1; 
         else        rand_bit <= 1'b0;
     end
 

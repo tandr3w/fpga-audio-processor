@@ -23,6 +23,14 @@ module distortion (
         if (!enable) begin
             out_L = in_L;
             out_R = in_R;
+            sign_L = 1'b0;
+            sign_R = 1'b0;
+            abs_L = 32'sh0;
+            abs_R = 32'sh0;
+            squash_L = 32'sh0;
+            squash_R = 32'sh0;
+            makeup_L = 32'sh0;
+            makeup_R = 32'sh0;
         end else begin
             sign_L = in_L[31];
             sign_R = in_R[31];
@@ -32,7 +40,7 @@ module distortion (
 
             // --- LEFT CHANNEL ---
             if (abs_L < SOFT_THRESH) begin
-                squash_L = abs_L; // Quiet audio passes perfectly cleanly
+                squash_L = abs_L; 
             end else if (abs_L < HARD_THRESH) begin
                 squash_L = SOFT_THRESH + ((abs_L - SOFT_THRESH) >>> 1);
             end else begin
