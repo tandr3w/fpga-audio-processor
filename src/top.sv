@@ -16,6 +16,7 @@ module top (
 
 logic signed [31:0] mute_out_L,  mute_out_R;
 logic signed [31:0] dist_out_L,  dist_out_R;
+logic signed [31:0] echo_out_L,  echo_out_R;
 logic signed [31:0] l_processed, r_processed;
 
 mute_effect master_mute (
@@ -34,8 +35,15 @@ distortion dist_effect (
 echo echo_effect (
     .CLOCK_50(CLOCK_50),
     .in_L(dist_out_L), .in_R(dist_out_R),
-    .out_L(l_processed), .out_R(r_processed),
+    .out_L(echo_out_L), .out_R(echo_out_R),
     .enable(SW[2]) // Switch 0 turns it ON
+);
+
+vinyl vinyl_effect (
+    .CLOCK_50(CLOCK_50),
+    .in_L(echo_out_L), .in_R(echo_out_R),
+    .out_L(l_processed), .out_R(r_processed),
+    .enable(SW[3]) // Switch 0 turns it ON
 );
 
 always_ff @(posedge CLOCK_50) begin

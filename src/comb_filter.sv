@@ -1,3 +1,5 @@
+`timescale 1ns/100ps
+
 module comb_filter #(parameter DEPTH = 2048) (
     input  logic              clk,
     input  logic              enable,

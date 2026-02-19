@@ -1,3 +1,5 @@
+`timescale 1ns/100ps
+
 module echo (
     input  logic              CLOCK_50,
     input  logic              enable,   
