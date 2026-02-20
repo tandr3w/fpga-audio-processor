@@ -22,9 +22,9 @@ LOG: 6100 : INFO : tb : uut.audio_out_L : expected_value: 0 actual_value: 0
 LOG: 6100 : INFO : tb : uut.audio_out_R : expected_value: 0 actual_value: 0
 
 [TEST 3] Distortion Effect
-  -> FAIL: Distortion: small signal passthrough
-LOG: 7900 : ERROR : tb : uut.audio_out_L : expected_value: 1000000 actual_value: 1312500
-LOG: 7900 : ERROR : tb : uut.audio_out_R : expected_value: 1000000 actual_value: 1312500
+  -> PASS: Distortion: small signal passthrough
+LOG: 7900 : INFO : tb : uut.audio_out_L : expected_value: 1000000 actual_value: 1000000
+LOG: 7900 : INFO : tb : uut.audio_out_R : expected_value: 1000000 actual_value: 1000000
   -> PASS: Distortion compresses large signals (out=29531250)
 LOG: 8700 : INFO : tb : uut.audio_out_L : expected_value: <50000000 actual_value: 29531250
   -> PASS: Distortion handles negative signals (out=-29531250)
@@ -101,9 +101,9 @@ LOG: 106500 : INFO : tb : uut.audio_out_R : expected_value: 8765432 actual_value
 ===        Test Summary              ===
 ========================================
 Total Tests:  24
-Passed:       22
-Failed:       2
-Pass Rate:    91%
+Passed:       23
+Failed:       1
+Pass Rate:    95%
 ========================================
 
 TEST FAILED
