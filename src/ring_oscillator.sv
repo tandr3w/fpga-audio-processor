@@ -21,18 +21,19 @@ module ring_oscillator #(parameter STAGES = 13) (
 
 `else
 
-    /* synthesis keep */ wire [STAGES-1:0] chain;
+    // /* synthesis keep */ wire [STAGES-1:0] chain;
 
-    assign chain[0] = enable ? ~chain[STAGES-1] : 1'b0;
+    // assign chain[0] = enable ? ~chain[STAGES-1] : 1'b0;
 
-    genvar i;
-    generate
-        for (i = 1; i < STAGES; i++) begin : ro_loop
-            assign chain[i] = ~chain[i-1];
-        end
-    endgenerate
+    // genvar i;
+    // generate
+    //     for (i = 1; i < STAGES; i++) begin : ro_loop
+    //         assign chain[i] = ~chain[i-1];
+    //     end
+    // endgenerate
 
-    assign rand_bit = chain[STAGES-1];
+    // assign rand_bit = chain[STAGES-1];
+    assign rand_bit = 1'b0;
 
 `endif
 
