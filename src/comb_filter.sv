@@ -6,7 +6,9 @@ module comb_filter #(parameter DEPTH = 2048) (
     input  logic signed [31:0] in,
     output logic signed [31:0] out
 );
-    logic signed [31:0] mem [DEPTH-1:0];
+    /* verilator tracing_off */
+    logic signed [31:0] mem [DEPTH-1:0] = '{default:32'sh0};
+    /* verilator tracing_on */
 
     logic [$clog2(DEPTH)-1:0] addr = 0;
     logic signed [31:0] delayed_raw;

@@ -94,7 +94,7 @@ module tb;
     // --- MAIN TEST SEQUENCE ---
     initial begin
         $dumpfile("sim_out/wave.vcd");
-        $dumpvars(0, tb);
+        $dumpvars(1, tb);
         $display("TEST START");
         
 
