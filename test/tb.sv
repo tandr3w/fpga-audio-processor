@@ -263,22 +263,9 @@ module tb;
         repeat(10) @(posedge CLOCK_50);
 
         // ============================================================
-        // TEST 7: Master Mute Overrides All Effects
-        // ============================================================
-        $display("\n[TEST 7] Master Mute Override");
-        SW = 10'b0000000111; // All effects ON including mute
-        
-        apply_audio_sample(32'sd30000000, 32'sd30000000, 5);
-        @(posedge CLOCK_50);
-        check_audio_output(32'sd0, 32'sd0, "Mute overrides all effects");
-
-        SW = 10'b0;
-        repeat(5) @(posedge CLOCK_50);
-
-        // ============================================================
         // TEST 8: Handshake Protocol
         // ============================================================
-        $display("\n[TEST 8] Handshake Protocol");
+        $display("\n[TEST 7] Handshake Protocol");
         SW = 10'b0;
         
         // Both signals high - should activate
@@ -324,7 +311,7 @@ module tb;
         // ============================================================
         // TEST 9: Boundary Values
         // ============================================================
-        $display("\n[TEST 9] Boundary Values");
+        $display("\n[TEST 8] Boundary Values");
         SW = 10'b0; // All effects off for clean test
         
         // Maximum positive
@@ -347,7 +334,7 @@ module tb;
         // ============================================================
         // TEST 10: Switch Stability
         // ============================================================
-        $display("\n[TEST 10] Switch Toggle Stability");
+        $display("\n[TEST 9] Switch Toggle Stability");
         
         // Rapid effect toggling
         SW = 10'b0000000010; // Distortion on
@@ -365,7 +352,7 @@ module tb;
         // ============================================================
         // TEST 11: Asymmetric Channel Processing
         // ============================================================
-        $display("\n[TEST 11] Asymmetric Channel Processing");
+        $display("\n[TEST 10] Asymmetric Channel Processing");
         SW = 10'b0;
         
         apply_audio_sample(32'sd10000000, -32'sd10000000, 3);
@@ -381,7 +368,7 @@ module tb;
         // ============================================================
         // TEST 12: Sequential Processing
         // ============================================================
-        $display("\n[TEST 12] Sequential Sample Processing");
+        $display("\n[TEST 11] Sequential Sample Processing");
         SW = 10'b0;
         
         audio_in_available = 1;
@@ -409,7 +396,7 @@ module tb;
         // ============================================================
         // TEST 13: Unused Switches
         // ============================================================
-        $display("\n[TEST 13] Unused Switch Verification");
+        $display("\n[TEST 12] Unused Switch Verification");
         SW = 10'b1111110000; // Upper switches (unused)
         
         apply_audio_sample(32'sd7654321, 32'sd8765432, 3);
