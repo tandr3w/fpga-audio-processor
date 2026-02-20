@@ -1,0 +1,105 @@
+# DEPS.yml - Dependency configuration for audio effects processor
+# Files are listed in dependency order (dependencies first)
+
+# ============================================================
+# sim: Simulation target for quartus_tb
+# ============================================================
+sim:
+  top: quartus_tb
+  
+  incdirs:
+    - src
+    - scripts
+    
+  deps:
+    # Basic effects modules (no dependencies)
+    - src/mute.sv
+    - src/ring_oscillator.sv
+    
+    # Comb filter (used by echo)
+    - src/comb_filter.sv
+    
+    # Complex effects modules
+    - src/distortion.sv
+    - src/echo.sv
+    - src/vinyl.sv
+    
+    # Top module (depends on all effects)
+    - src/top.sv
+    
+    # Testbench
+    - test/quartus_tb.sv
+
+# ============================================================
+# synth: Synthesis target for de1soc_wrapper (FPGA)
+# ============================================================
+synth:
+  top: de1soc_wrapper
+  
+  incdirs:
+    - src
+    - drivers
+    - drivers/Audio_Controller
+    - drivers/avconf
+    - db
+    
+  deps:
+    # Audio PLL
+    - db/Audio_Clock_altpll.v
+    
+    # Audio Controller components
+    - drivers/Audio_Controller/Altera_UP_Clock_Edge.v
+    - drivers/Audio_Controller/Altera_UP_SYNC_FIFO.v
+    - drivers/Audio_Controller/Altera_UP_Audio_Bit_Counter.v
+    - drivers/Audio_Controller/Altera_UP_Audio_In_Deserializer.v
+    - drivers/Audio_Controller/Altera_UP_Audio_Out_Serializer.v
+    - drivers/Audio_Controller/Audio_Clock.v
+    - drivers/Audio_Controller/Audio_Controller.v
+    
+    # AV Config (I2C)
+    - drivers/avconf/I2C_Controller.v
+    - drivers/avconf/avconf.v
+    
+    # Audio effects modules
+    - src/mute.sv
+    - src/ring_oscillator.sv
+    - src/comb_filter.sv
+    - src/distortion.sv
+    - src/echo.sv
+    - src/vinyl.sv
+    
+    # Top module
+    - src/top.sv
+    
+    # FPGA wrapper
+    - drivers/de1soc_wrapper.sv
+
+# ============================================================
+# test: Testbench target for tb.sv (comprehensive test suite)
+# ============================================================
+test:
+  top: tb
+  
+  incdirs:
+    - src
+    
+  deps:
+    # Basic effects modules
+    - src/mute.sv
+    - src/ring_oscillator.sv
+    
+    # Comb filter
+    - src/comb_filter.sv
+    
+    # Complex effects modules
+    - src/distortion.sv
+    - src/echo.sv
+    - src/vinyl.sv
+    
+    # Top module
+    - src/top.sv
+    
+    # Testbench
+    - test/tb.sv
+
+

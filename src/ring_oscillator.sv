@@ -10,7 +10,9 @@ module ring_oscillator #(parameter STAGES = 13) (
     logic [31:0] temp_rand;
     always_ff @(posedge CLOCK_50) begin
         if (enable) begin
+            // synthesis translate_off
             temp_rand = $urandom;
+            // synthesis translate_on
             rand_bit <= temp_rand[0]; 
         end else begin
             rand_bit <= 1'b0;
