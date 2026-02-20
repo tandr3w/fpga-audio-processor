@@ -190,31 +190,33 @@ module tb;
         // ============================================================
         // TEST 4: Echo Effect (SW[2])
         // ============================================================
-        // $display("\n[TEST 4] Echo Effect");
-        // SW = 10'b0000000100; // Only echo enabled
+        $display("\n[TEST 4] Echo Effect");
+        SW = 10'b0000000100; // Only echo enabled
         
-        // // Echo needs time to fill delay lines
-        // $display("  Filling echo delay buffers...");
-        // repeat(5000) @(posedge CLOCK_50); // Allow echo buffers to initialize
+        // Echo needs time to fill delay lines
+        $dumpoff;
+        $display("  Filling echo delay buffers...");
+        repeat(5000) @(posedge CLOCK_50); // Allow echo buffers to initialize
+        $dumpon;
         
-        // // Apply a signal and check that echo processes it
-        // apply_audio_sample(32'sd10000000, 32'sd10000000, 5);
-        // repeat(10) @(posedge CLOCK_50);
+        // Apply a signal and check that echo processes it
+        apply_audio_sample(32'sd10000000, 32'sd10000000, 5);
+        repeat(10) @(posedge CLOCK_50);
         
-        // test_count = test_count + 1;
-        // // Echo should modify the output (not exact passthrough due to comb filters)
-        // if (audio_out_L !== 32'sd0 && audio_out_R !== 32'sd0) begin
-        //     $display("  -> PASS: Echo processes audio (L=%0d, R=%0d)", audio_out_L, audio_out_R);
-        //     $display("LOG: %0t : INFO : tb : uut.audio_out_L : expected_value: non-zero actual_value: %0d", $time, audio_out_L);
-        //     pass_count = pass_count + 1;
-        // end else begin
-        //     $display("  -> FAIL: Echo should produce non-zero output");
-        //     $display("LOG: %0t : ERROR : tb : uut.audio_out_L : expected_value: non-zero actual_value: %0d", $time, audio_out_L);
-        //     fail_count = fail_count + 1;
-        // end
+        test_count = test_count + 1;
+        // Echo should modify the output (not exact passthrough due to comb filters)
+        if (audio_out_L !== 32'sd0 && audio_out_R !== 32'sd0) begin
+            $display("  -> PASS: Echo processes audio (L=%0d, R=%0d)", audio_out_L, audio_out_R);
+            $display("LOG: %0t : INFO : tb : uut.audio_out_L : expected_value: non-zero actual_value: %0d", $time, audio_out_L);
+            pass_count = pass_count + 1;
+        end else begin
+            $display("  -> FAIL: Echo should produce non-zero output");
+            $display("LOG: %0t : ERROR : tb : uut.audio_out_L : expected_value: non-zero actual_value: %0d", $time, audio_out_L);
+            fail_count = fail_count + 1;
+        end
 
-        // SW = 10'b0; // Turn off echo
-        // repeat(10) @(posedge CLOCK_50);
+        SW = 10'b0; // Turn off echo
+        repeat(10) @(posedge CLOCK_50);
 
         // ============================================================
         // TEST 5: Vinyl Effect (SW[3])
