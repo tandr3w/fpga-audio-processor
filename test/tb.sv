@@ -93,7 +93,10 @@ module tb;
 
     // --- MAIN TEST SEQUENCE ---
     initial begin
+        $dumpfile("sim_out/wave.vcd");
+        $dumpvars(0, tb);
         $display("TEST START");
+        
 
         // Initialize all signals
         SW = 10'b0;
@@ -439,12 +442,6 @@ module tb;
         end
 
         $finish;
-    end
-
-    // Waveform dumping
-    initial begin
-        $dumpfile("sim_out/wave.vcd");
-        $dumpvars(0, tb);
     end
 
 endmodule
