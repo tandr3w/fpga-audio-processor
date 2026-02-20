@@ -1,0 +1,6 @@
+=== Command: grep -n "32'd" test/tb.sv | head -5 (2026-02-20T00:00:31.751Z) ===
+Exit Code: 0
+Output:
+
+=== End Output ===
+

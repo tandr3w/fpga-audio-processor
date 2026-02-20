@@ -61,7 +61,7 @@ module tb;
         input string test_name
     );
         test_count = test_count + 1;
-        if (audio_out_L !== 32'd0 || audio_out_R !== 32'd0) begin
+        if (audio_out_L !== 32'sd0 || audio_out_R !== 32'sd0) begin
             $display("  -> PASS: %s (L=%0d, R=%0d)", test_name, audio_out_L, audio_out_R);
             $display("LOG: %0t : INFO : tb : uut.audio_out_L : expected_value: non-zero actual_value: %0d", $time, audio_out_L);
             $display("LOG: %0t : INFO : tb : uut.audio_out_R : expected_value: non-zero actual_value: %0d", $time, audio_out_R);
@@ -115,9 +115,9 @@ module tb;
         $display("\n[TEST 1] Basic Passthrough - All Effects OFF");
         SW = 10'b0000000000; // All effects off
         
-        apply_audio_sample(32'd1000, -32'd1000, 3);
+        apply_audio_sample(32'sd1000, -32'sd1000, 3);
         @(posedge CLOCK_50);
-        check_audio_output(32'd1000, -32'd1000, "Passthrough positive/negative");
+        check_audio_output(32'sd1000, -32'sd1000, "Passthrough positive/negative");
 
         apply_audio_sample(32'h00010000, 32'h00020000, 3);
         @(posedge CLOCK_50);
@@ -131,13 +131,13 @@ module tb;
         $display("\n[TEST 2] Master Mute Function");
         SW[0] = 1; // Enable master mute
         
-        apply_audio_sample(32'd5000, -32'd3000, 3);
+        apply_audio_sample(32'sd5000, -32'sd3000, 3);
         @(posedge CLOCK_50);
-        check_audio_output(32'd0, 32'd0, "Mute blocks all audio");
+        check_audio_output(32'sd0, 32'sd0, "Mute blocks all audio");
 
         apply_audio_sample(32'h7FFFFFFF, 32'h80000000, 3);
         @(posedge CLOCK_50);
-        check_audio_output(32'd0, 32'd0, "Mute blocks max values");
+        check_audio_output(32'sd0, 32'sd0, "Mute blocks max values");
 
         SW[0] = 0; // Disable mute
         repeat(5) @(posedge CLOCK_50);
@@ -149,15 +149,15 @@ module tb;
         SW = 10'b0000000010; // Only distortion enabled
         
         // Small signal - should pass through distortion
-        apply_audio_sample(32'd1000000, 32'd1000000, 3);
+        apply_audio_sample(32'sd1000000, 32'sd1000000, 3);
         @(posedge CLOCK_50);
-        check_audio_output(32'd1000000, 32'd1000000, "Distortion: small signal passthrough");
+        check_audio_output(32'sd1000000, 32'sd1000000, "Distortion: small signal passthrough");
 
         // Large signal - should be compressed
-        apply_audio_sample(32'd50000000, 32'd50000000, 3);
+        apply_audio_sample(32'sd50000000, 32'sd50000000, 3);
         @(posedge CLOCK_50);
         test_count = test_count + 1;
-        if (audio_out_L < 32'd50000000 && audio_out_L > 32'd0) begin
+        if (audio_out_L < 32'sd50000000 && audio_out_L > 32'sd0) begin
             $display("  -> PASS: Distortion compresses large signals (out=%0d)", audio_out_L);
             $display("LOG: %0t : INFO : tb : uut.audio_out_L : expected_value: <50000000 actual_value: %0d", $time, audio_out_L);
             pass_count = pass_count + 1;
@@ -168,10 +168,10 @@ module tb;
         end
 
         // Negative signal
-        apply_audio_sample(-32'd50000000, -32'd50000000, 3);
+        apply_audio_sample(-32'sd50000000, -32'sd50000000, 3);
         @(posedge CLOCK_50);
         test_count = test_count + 1;
-        if (audio_out_L > -32'd50000000 && audio_out_L < 32'd0) begin
+        if (audio_out_L > -32'sd50000000 && audio_out_L < 32'sd0) begin
             $display("  -> PASS: Distortion handles negative signals (out=%0d)", audio_out_L);
             $display("LOG: %0t : INFO : tb : uut.audio_out_L : expected_value: >-50000000 actual_value: %0d", $time, audio_out_L);
             pass_count = pass_count + 1;
@@ -195,12 +195,12 @@ module tb;
         repeat(5000) @(posedge CLOCK_50); // Allow echo buffers to initialize
         
         // Apply a signal and check that echo processes it
-        apply_audio_sample(32'd10000000, 32'd10000000, 5);
+        apply_audio_sample(32'sd10000000, 32'sd10000000, 5);
         repeat(10) @(posedge CLOCK_50);
         
         test_count = test_count + 1;
         // Echo should modify the output (not exact passthrough due to comb filters)
-        if (audio_out_L !== 32'd0 && audio_out_R !== 32'd0) begin
+        if (audio_out_L !== 32'sd0 && audio_out_R !== 32'sd0) begin
             $display("  -> PASS: Echo processes audio (L=%0d, R=%0d)", audio_out_L, audio_out_R);
             $display("LOG: %0t : INFO : tb : uut.audio_out_L : expected_value: non-zero actual_value: %0d", $time, audio_out_L);
             pass_count = pass_count + 1;
@@ -223,12 +223,12 @@ module tb;
         repeat(200) @(posedge CLOCK_50);
         
         // Clean input signal
-        apply_audio_sample(32'd5000000, 32'd5000000, 5);
+        apply_audio_sample(32'sd5000000, 32'sd5000000, 5);
         repeat(10) @(posedge CLOCK_50);
         
         test_count = test_count + 1;
         // Vinyl should add noise/variance, so output shouldn't exactly match input
-        if (audio_out_L !== 32'd5000000 || audio_out_R !== 32'd5000000) begin
+        if (audio_out_L !== 32'sd5000000 || audio_out_R !== 32'sd5000000) begin
             $display("  -> PASS: Vinyl adds noise/crackle (L=%0d, R=%0d)", audio_out_L, audio_out_R);
             $display("LOG: %0t : INFO : tb : uut.audio_out_L : expected_value: !=5000000 actual_value: %0d", $time, audio_out_L);
             pass_count = pass_count + 1;
@@ -248,7 +248,7 @@ module tb;
         
         // Distortion + Echo
         SW = 10'b0000000110;
-        apply_audio_sample(32'd20000000, 32'd20000000, 5);
+        apply_audio_sample(32'sd20000000, 32'sd20000000, 5);
         repeat(10) @(posedge CLOCK_50);
         check_audio_output_nonzero("Distortion + Echo combination");
         SW = 10'b0;
@@ -257,7 +257,7 @@ module tb;
         // All effects enabled (except mute)
         SW = 10'b0000001110;
         repeat(100) @(posedge CLOCK_50); // Let effects stabilize
-        apply_audio_sample(32'd15000000, 32'd15000000, 5);
+        apply_audio_sample(32'sd15000000, 32'sd15000000, 5);
         repeat(10) @(posedge CLOCK_50);
         check_audio_output_nonzero("All effects enabled");
         SW = 10'b0;
@@ -269,9 +269,9 @@ module tb;
         $display("\n[TEST 7] Master Mute Override");
         SW = 10'b0000001111; // All effects ON including mute
         
-        apply_audio_sample(32'd30000000, 32'd30000000, 5);
+        apply_audio_sample(32'sd30000000, 32'sd30000000, 5);
         @(posedge CLOCK_50);
-        check_audio_output(32'd0, 32'd0, "Mute overrides all effects");
+        check_audio_output(32'sd0, 32'sd0, "Mute overrides all effects");
 
         SW = 10'b0;
         repeat(5) @(posedge CLOCK_50);
@@ -283,8 +283,8 @@ module tb;
         SW = 10'b0;
         
         // Both signals high - should activate
-        audio_in_L = 32'd12345;
-        audio_in_R = 32'd67890;
+        audio_in_L = 32'sd12345;
+        audio_in_R = 32'sd67890;
         audio_in_available = 1;
         audio_out_allowed = 1;
         @(posedge CLOCK_50);
@@ -339,9 +339,9 @@ module tb;
         check_audio_output(32'h80000000, 32'h80000000, "Max negative passthrough");
 
         // Zero
-        apply_audio_sample(32'd0, 32'd0, 3);
+        apply_audio_sample(32'sd0, 32'sd0, 3);
         @(posedge CLOCK_50);
-        check_audio_output(32'd0, 32'd0, "Zero passthrough");
+        check_audio_output(32'sd0, 32'sd0, "Zero passthrough");
 
         repeat(5) @(posedge CLOCK_50);
 
@@ -352,14 +352,14 @@ module tb;
         
         // Rapid effect toggling
         SW = 10'b0000000010; // Distortion on
-        apply_audio_sample(32'd8000000, 32'd8000000, 2);
+        apply_audio_sample(32'sd8000000, 32'sd8000000, 2);
         @(posedge CLOCK_50);
         
         SW = 10'b0000000000; // All off
         @(posedge CLOCK_50);
-        apply_audio_sample(32'd8000000, 32'd8000000, 2);
+        apply_audio_sample(32'sd8000000, 32'sd8000000, 2);
         @(posedge CLOCK_50);
-        check_audio_output(32'd8000000, 32'd8000000, "Effect toggle stability");
+        check_audio_output(32'sd8000000, 32'sd8000000, "Effect toggle stability");
 
         repeat(5) @(posedge CLOCK_50);
 
@@ -369,9 +369,9 @@ module tb;
         $display("\n[TEST 11] Asymmetric Channel Processing");
         SW = 10'b0;
         
-        apply_audio_sample(32'd10000000, -32'd10000000, 3);
+        apply_audio_sample(32'sd10000000, -32'sd10000000, 3);
         @(posedge CLOCK_50);
-        check_audio_output(32'd10000000, -32'd10000000, "Independent channel processing");
+        check_audio_output(32'sd10000000, -32'sd10000000, "Independent channel processing");
 
         apply_audio_sample(32'h7FFFFFFF, 32'h80000000, 3);
         @(posedge CLOCK_50);
@@ -388,20 +388,20 @@ module tb;
         audio_in_available = 1;
         audio_out_allowed = 1;
         
-        audio_in_L = 32'd1111;
-        audio_in_R = 32'd2222;
+        audio_in_L = 32'sd1111;
+        audio_in_R = 32'sd2222;
         repeat(3) @(posedge CLOCK_50);
-        check_audio_output(32'd1111, 32'd2222, "Sequential sample 1");
+        check_audio_output(32'sd1111, 32'sd2222, "Sequential sample 1");
         
-        audio_in_L = 32'd3333;
-        audio_in_R = 32'd4444;
+        audio_in_L = 32'sd3333;
+        audio_in_R = 32'sd4444;
         repeat(3) @(posedge CLOCK_50);
-        check_audio_output(32'd3333, 32'd4444, "Sequential sample 2");
+        check_audio_output(32'sd3333, 32'sd4444, "Sequential sample 2");
         
-        audio_in_L = 32'd5555;
-        audio_in_R = 32'd6666;
+        audio_in_L = 32'sd5555;
+        audio_in_R = 32'sd6666;
         repeat(3) @(posedge CLOCK_50);
-        check_audio_output(32'd5555, 32'd6666, "Sequential sample 3");
+        check_audio_output(32'sd5555, 32'sd6666, "Sequential sample 3");
         
         audio_in_available = 0;
         audio_out_allowed = 0;
@@ -413,9 +413,9 @@ module tb;
         $display("\n[TEST 13] Unused Switch Verification");
         SW = 10'b1111110000; // Upper switches (unused)
         
-        apply_audio_sample(32'd7654321, 32'd8765432, 3);
+        apply_audio_sample(32'sd7654321, 32'sd8765432, 3);
         @(posedge CLOCK_50);
-        check_audio_output(32'd7654321, 32'd8765432, "Unused switches don't interfere");
+        check_audio_output(32'sd7654321, 32'sd8765432, "Unused switches don't interfere");
 
         SW = 10'b0;
         repeat(5) @(posedge CLOCK_50);
