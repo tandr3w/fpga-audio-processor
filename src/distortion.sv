@@ -40,26 +40,33 @@ module distortion (
 
             // --- LEFT CHANNEL ---
             if (abs_L < SOFT_THRESH) begin
-                squash_L = abs_L; 
+                // Small signal: pass through unchanged (no compression, no makeup)
+                squash_L = abs_L;
+                makeup_L = abs_L;
             end else if (abs_L < HARD_THRESH) begin
+                // Medium signal: compress and apply makeup gain
                 squash_L = SOFT_THRESH + ((abs_L - SOFT_THRESH) >>> 1);
+                makeup_L = squash_L + (squash_L >>> 2) + (squash_L >>> 4);
             end else begin
-                // Hard cap at exactly 22,500,000
-                squash_L = SOFT_THRESH + ((HARD_THRESH - SOFT_THRESH) >>> 1); 
+                // Large signal: hard cap at 22,500,000 and apply makeup gain
+                squash_L = SOFT_THRESH + ((HARD_THRESH - SOFT_THRESH) >>> 1);
+                makeup_L = squash_L + (squash_L >>> 2) + (squash_L >>> 4);
             end
 
             // --- RIGHT CHANNEL ---
             if (abs_R < SOFT_THRESH) begin
+                // Small signal: pass through unchanged (no compression, no makeup)
                 squash_R = abs_R;
+                makeup_R = abs_R;
             end else if (abs_R < HARD_THRESH) begin
+                // Medium signal: compress and apply makeup gain
                 squash_R = SOFT_THRESH + ((abs_R - SOFT_THRESH) >>> 1);
+                makeup_R = squash_R + (squash_R >>> 2) + (squash_R >>> 4);
             end else begin
+                // Large signal: hard cap and apply makeup gain
                 squash_R = SOFT_THRESH + ((HARD_THRESH - SOFT_THRESH) >>> 1);
+                makeup_R = squash_R + (squash_R >>> 2) + (squash_R >>> 4);
             end
-
-            // Volume Compensation
-            makeup_L = squash_L + (squash_L >>> 2) + (squash_L >>> 4);
-            makeup_R = squash_R + (squash_R >>> 2) + (squash_R >>> 4);
 
             out_L = sign_L ? -makeup_L : makeup_L;
             out_R = sign_R ? -makeup_R : makeup_R;

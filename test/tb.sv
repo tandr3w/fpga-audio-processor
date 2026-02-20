@@ -266,7 +266,7 @@ module tb;
         // TEST 7: Master Mute Overrides All Effects
         // ============================================================
         $display("\n[TEST 7] Master Mute Override");
-        SW = 10'b0000001111; // All effects ON including mute
+        SW = 10'b0000000111; // All effects ON including mute
         
         apply_audio_sample(32'sd30000000, 32'sd30000000, 5);
         @(posedge CLOCK_50);
