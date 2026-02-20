@@ -43,10 +43,7 @@ synth:
     - drivers/avconf
     - db
     
-  deps:
-    # Audio PLL
-    - db/Audio_Clock_altpll.v
-    
+  deps:    
     # Audio Controller components
     - drivers/Audio_Controller/Altera_UP_Clock_Edge.v
     - drivers/Audio_Controller/Altera_UP_SYNC_FIFO.v
