@@ -443,8 +443,8 @@ module tb;
 
     // Waveform dumping
     initial begin
-        $dumpfile("dumpfile.fst");
-        $dumpvars(0);
+        $dumpfile("sim_out/wave.vcd");
+        $dumpvars(0, tb);
     end
 
 endmodule
