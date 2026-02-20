@@ -192,13 +192,7 @@ module tb;
         // ============================================================
         $display("\n[TEST 4] Echo Effect");
         SW = 10'b0000000100; // Only echo enabled
-        
-        // Echo needs time to fill delay lines
-        $dumpoff;
-        $display("  Filling echo delay buffers...");
-        repeat(5000) @(posedge CLOCK_50); // Allow echo buffers to initialize
-        $dumpon;
-        
+
         // Apply a signal and check that echo processes it
         apply_audio_sample(32'sd10000000, 32'sd10000000, 5);
         repeat(10) @(posedge CLOCK_50);
