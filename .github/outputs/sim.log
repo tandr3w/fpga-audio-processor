@@ -30,77 +30,81 @@ LOG: 8700 : INFO : tb : uut.audio_out_L : expected_value: <50000000 actual_value
   -> PASS: Distortion handles negative signals (out=-29531250)
 LOG: 9500 : INFO : tb : uut.audio_out_L : expected_value: >-50000000 actual_value: -29531250
 
+[TEST 4] Echo Effect
+  -> PASS: Echo processes audio (L=2500000, R=2500000)
+LOG: 13500 : INFO : tb : uut.audio_out_L : expected_value: non-zero actual_value: 2500000
+
 [TEST 5] Vinyl Effect
   -> PASS: Vinyl adds noise/crackle (L=19896068, R=19896068)
-LOG: 53500 : INFO : tb : uut.audio_out_L : expected_value: !=5000000 actual_value: 19896068
+LOG: 58500 : INFO : tb : uut.audio_out_L : expected_value: !=5000000 actual_value: 19896068
 
 [TEST 6] Combined Effects
-  -> PASS: Distortion + Echo combination (L=5742187, R=5742187)
-LOG: 58500 : INFO : tb : uut.audio_out_L : expected_value: non-zero actual_value: 5742187
-LOG: 58500 : INFO : tb : uut.audio_out_R : expected_value: non-zero actual_value: 5742187
+  -> PASS: Distortion + Echo combination (L=10742187, R=10742187)
+LOG: 63500 : INFO : tb : uut.audio_out_L : expected_value: non-zero actual_value: 10742187
+LOG: 63500 : INFO : tb : uut.audio_out_R : expected_value: non-zero actual_value: 10742187
   -> PASS: All effects enabled (L=18646440, R=18646440)
-LOG: 83500 : INFO : tb : uut.audio_out_L : expected_value: non-zero actual_value: 18646440
-LOG: 83500 : INFO : tb : uut.audio_out_R : expected_value: non-zero actual_value: 18646440
+LOG: 88500 : INFO : tb : uut.audio_out_L : expected_value: non-zero actual_value: 18646440
+LOG: 88500 : INFO : tb : uut.audio_out_R : expected_value: non-zero actual_value: 18646440
 
 [TEST 7] Master Mute Override
   -> FAIL: Mute overrides all effects
-LOG: 86700 : ERROR : tb : uut.audio_out_L : expected_value: 0 actual_value: 21533201
-LOG: 86700 : ERROR : tb : uut.audio_out_R : expected_value: 0 actual_value: 21533201
+LOG: 91700 : ERROR : tb : uut.audio_out_L : expected_value: 0 actual_value: 21533201
+LOG: 91700 : ERROR : tb : uut.audio_out_R : expected_value: 0 actual_value: 21533201
 
 [TEST 8] Handshake Protocol
   -> PASS: Both handshake signals activate
-LOG: 88100 : INFO : tb : uut.read_audio_in : expected_value: 1 actual_value: 1
+LOG: 93100 : INFO : tb : uut.read_audio_in : expected_value: 1 actual_value: 1
   -> PASS: Handshake requires both signals
-LOG: 88500 : INFO : tb : uut.read_audio_in : expected_value: 0 actual_value: 0
+LOG: 93500 : INFO : tb : uut.read_audio_in : expected_value: 0 actual_value: 0
 
 [TEST 9] Boundary Values
   -> PASS: Max positive passthrough
-LOG: 90300 : INFO : tb : uut.audio_out_L : expected_value: 2147483647 actual_value: 2147483647
-LOG: 90300 : INFO : tb : uut.audio_out_R : expected_value: 2147483647 actual_value: 2147483647
+LOG: 95300 : INFO : tb : uut.audio_out_L : expected_value: 2147483647 actual_value: 2147483647
+LOG: 95300 : INFO : tb : uut.audio_out_R : expected_value: 2147483647 actual_value: 2147483647
   -> PASS: Max negative passthrough
-LOG: 91100 : INFO : tb : uut.audio_out_L : expected_value: -2147483648 actual_value: -2147483648
-LOG: 91100 : INFO : tb : uut.audio_out_R : expected_value: -2147483648 actual_value: -2147483648
+LOG: 96100 : INFO : tb : uut.audio_out_L : expected_value: -2147483648 actual_value: -2147483648
+LOG: 96100 : INFO : tb : uut.audio_out_R : expected_value: -2147483648 actual_value: -2147483648
   -> PASS: Zero passthrough
-LOG: 91900 : INFO : tb : uut.audio_out_L : expected_value: 0 actual_value: 0
-LOG: 91900 : INFO : tb : uut.audio_out_R : expected_value: 0 actual_value: 0
+LOG: 96900 : INFO : tb : uut.audio_out_L : expected_value: 0 actual_value: 0
+LOG: 96900 : INFO : tb : uut.audio_out_R : expected_value: 0 actual_value: 0
 
 [TEST 10] Switch Toggle Stability
   -> PASS: Effect toggle stability
-LOG: 94300 : INFO : tb : uut.audio_out_L : expected_value: 8000000 actual_value: 8000000
-LOG: 94300 : INFO : tb : uut.audio_out_R : expected_value: 8000000 actual_value: 8000000
+LOG: 99300 : INFO : tb : uut.audio_out_L : expected_value: 8000000 actual_value: 8000000
+LOG: 99300 : INFO : tb : uut.audio_out_R : expected_value: 8000000 actual_value: 8000000
 
 [TEST 11] Asymmetric Channel Processing
   -> PASS: Independent channel processing
-LOG: 96100 : INFO : tb : uut.audio_out_L : expected_value: 10000000 actual_value: 10000000
-LOG: 96100 : INFO : tb : uut.audio_out_R : expected_value: -10000000 actual_value: -10000000
+LOG: 101100 : INFO : tb : uut.audio_out_L : expected_value: 10000000 actual_value: 10000000
+LOG: 101100 : INFO : tb : uut.audio_out_R : expected_value: -10000000 actual_value: -10000000
   -> PASS: Max positive/negative split
-LOG: 96900 : INFO : tb : uut.audio_out_L : expected_value: 2147483647 actual_value: 2147483647
-LOG: 96900 : INFO : tb : uut.audio_out_R : expected_value: -2147483648 actual_value: -2147483648
+LOG: 101900 : INFO : tb : uut.audio_out_L : expected_value: 2147483647 actual_value: 2147483647
+LOG: 101900 : INFO : tb : uut.audio_out_R : expected_value: -2147483648 actual_value: -2147483648
 
 [TEST 12] Sequential Sample Processing
   -> PASS: Sequential sample 1
-LOG: 98500 : INFO : tb : uut.audio_out_L : expected_value: 1111 actual_value: 1111
-LOG: 98500 : INFO : tb : uut.audio_out_R : expected_value: 2222 actual_value: 2222
+LOG: 103500 : INFO : tb : uut.audio_out_L : expected_value: 1111 actual_value: 1111
+LOG: 103500 : INFO : tb : uut.audio_out_R : expected_value: 2222 actual_value: 2222
   -> PASS: Sequential sample 2
-LOG: 99100 : INFO : tb : uut.audio_out_L : expected_value: 3333 actual_value: 3333
-LOG: 99100 : INFO : tb : uut.audio_out_R : expected_value: 4444 actual_value: 4444
+LOG: 104100 : INFO : tb : uut.audio_out_L : expected_value: 3333 actual_value: 3333
+LOG: 104100 : INFO : tb : uut.audio_out_R : expected_value: 4444 actual_value: 4444
   -> PASS: Sequential sample 3
-LOG: 99700 : INFO : tb : uut.audio_out_L : expected_value: 5555 actual_value: 5555
-LOG: 99700 : INFO : tb : uut.audio_out_R : expected_value: 6666 actual_value: 6666
+LOG: 104700 : INFO : tb : uut.audio_out_L : expected_value: 5555 actual_value: 5555
+LOG: 104700 : INFO : tb : uut.audio_out_R : expected_value: 6666 actual_value: 6666
 
 [TEST 13] Unused Switch Verification
   -> PASS: Unused switches don't interfere
-LOG: 101500 : INFO : tb : uut.audio_out_L : expected_value: 7654321 actual_value: 7654321
-LOG: 101500 : INFO : tb : uut.audio_out_R : expected_value: 8765432 actual_value: 8765432
+LOG: 106500 : INFO : tb : uut.audio_out_L : expected_value: 7654321 actual_value: 7654321
+LOG: 106500 : INFO : tb : uut.audio_out_R : expected_value: 8765432 actual_value: 8765432
 
 ========================================
 ===        Test Summary              ===
 ========================================
-Total Tests:  23
-Passed:       21
+Total Tests:  24
+Passed:       22
 Failed:       2
 Pass Rate:    91%
 ========================================
 
 TEST FAILED
-- test/tb.sv:444: Verilog $finish
+- test/tb.sv:440: Verilog $finish
