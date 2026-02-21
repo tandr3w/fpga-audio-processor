@@ -2,12 +2,13 @@
 
 module ring_oscillator #(parameter STAGES = 13) (
     input  logic enable,
-    input  logic CLOCK_50, // Kept for the simulation path
+    input  logic CLOCK_50, 
     output logic rand_bit
 );
 
-`ifndef SYNTHESIS 
-    // --- SIMULATION PATH (Unchanged, keeps your SVG file small) ---
+// EXPLICIT CHANGE: Swapped to the native Quartus macro!
+`ifndef ALTERA_RESERVED_QIS 
+    // --- SIMULATION PATH ---
     logic [31:0] temp_rand;
     always_ff @(posedge CLOCK_50) begin
         if (enable) begin

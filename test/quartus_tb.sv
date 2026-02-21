@@ -47,7 +47,7 @@ module quartus_tb;
         end
 
         // 2. Setup Switches (Turn on Distortion/Echo/etc here!)
-        SW[1] = 1;
+        SW[2] = 1;
         
         // 3. Reset
         #100;

@@ -7,29 +7,28 @@ module comb_filter #(parameter DEPTH = 2048) (
     input  logic signed [31:0] in,
     output logic signed [31:0] out
 );
+    // Memory is pre-initialized to 0, meaning we don't need X-state checks!
     logic signed [31:0] mem [DEPTH-1:0] = '{default:32'sh0};
     logic [$clog2(DEPTH)-1:0] addr = 0;
-    logic signed [31:0] delayed_raw;
-    logic signed [31:0] delayed_clean;
+    
+    // Initialize to 0 so the first cycle is clean
+    logic signed [31:0] delayed_raw = 0; 
+
+    // M10K Block RAM Inference
+    always_ff @(posedge clk) begin
+        delayed_raw <= mem[addr];
+    end
 
     always_ff @(posedge clk) begin
-        // Only do math when a new sample arrives!
+        // Only do math when a new sample arrives
         if (tick) begin 
             if (!enable) begin
                 out <= in;
             end else begin
-                delayed_raw = mem[addr];
+                // EXPLICIT CHANGE: Using delayed_raw directly in the math!
+                mem[addr] <= (in >>> 1) + (delayed_raw >>> 1) + (delayed_raw >>> 2) + (delayed_raw >>> 3); 
+                out <= delayed_raw;
                 
-                `ifdef SYNTHESIS
-                    delayed_clean = delayed_raw;
-                `else
-                    // synthesis translate_off
-                    delayed_clean = $isunknown(delayed_raw) ? 32'sh0 : delayed_raw;
-                    // synthesis translate_on
-                `endif
-
-                mem[addr] <= (in >>> 1) + (delayed_clean >>> 1) + (delayed_clean >>> 2) + (delayed_clean >>> 3); 
-                out <= delayed_clean;
                 addr <= (addr == DEPTH-1) ? 0 : addr + 1;
             end
         end
