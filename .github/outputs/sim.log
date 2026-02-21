@@ -35,16 +35,16 @@ LOG: 9500 : INFO : tb : uut.audio_out_L : expected_value: >-50000000 actual_valu
 LOG: 13500 : INFO : tb : uut.audio_out_L : expected_value: non-zero actual_value: 2500000
 
 [TEST 5] Vinyl Effect
-  -> PASS: Vinyl adds noise/crackle (L=19896068, R=19896068)
-LOG: 58500 : INFO : tb : uut.audio_out_L : expected_value: !=5000000 actual_value: 19896068
+  -> PASS: Vinyl adds noise/crackle (L=34792137, R=34792137)
+LOG: 58500 : INFO : tb : uut.audio_out_L : expected_value: !=5000000 actual_value: 34792137
 
 [TEST 6] Combined Effects
-  -> PASS: Distortion + Echo combination (L=10742187, R=10742187)
-LOG: 63500 : INFO : tb : uut.audio_out_L : expected_value: non-zero actual_value: 10742187
-LOG: 63500 : INFO : tb : uut.audio_out_R : expected_value: non-zero actual_value: 10742187
-  -> PASS: All effects enabled (L=18646440, R=18646440)
-LOG: 88500 : INFO : tb : uut.audio_out_L : expected_value: non-zero actual_value: 18646440
-LOG: 88500 : INFO : tb : uut.audio_out_R : expected_value: non-zero actual_value: 18646440
+  -> PASS: Distortion + Echo combination (L=5742187, R=5742187)
+LOG: 63500 : INFO : tb : uut.audio_out_L : expected_value: non-zero actual_value: 5742187
+LOG: 63500 : INFO : tb : uut.audio_out_R : expected_value: non-zero actual_value: 5742187
+  -> PASS: All effects enabled (L=32371006, R=32371006)
+LOG: 88500 : INFO : tb : uut.audio_out_L : expected_value: non-zero actual_value: 32371006
+LOG: 88500 : INFO : tb : uut.audio_out_R : expected_value: non-zero actual_value: 32371006
 
 [TEST 7] Handshake Protocol
   -> PASS: Both handshake signals activate
