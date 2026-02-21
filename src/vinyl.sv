@@ -62,8 +62,8 @@ module vinyl (
         if (!enable) begin
             out_L <= in_L; out_R <= in_R;
         end else begin
-            final_L = 33'(in_L) + (33'($signed(noise_reg)) >>> 7) + 33'(pop_val);
-            final_R = 33'(in_R) + (33'($signed(noise_reg)) >>> 7) + 33'(pop_val);
+            final_L = 33'(in_L) + (33'($signed(noise_reg)) >>> 6) + 33'(pop_val);
+            final_R = 33'(in_R) + (33'($signed(noise_reg)) >>> 6) + 33'(pop_val);
 
             // Prevent clipping
             if (final_L > MAX_VAL)      out_L <= 32'h7FFFFFFF;

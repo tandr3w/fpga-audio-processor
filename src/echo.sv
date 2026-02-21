@@ -2,6 +2,7 @@
 
 module echo (
     input  logic              CLOCK_50,
+    input  logic              tick,     // <-- ADDED: Audio tick signal
     input  logic              enable,   
     input  logic signed [31:0] in_L,    
     input  logic signed [31:0] in_R,    
@@ -12,15 +13,16 @@ module echo (
     logic signed [31:0] cL1, cL2, cL3, cL4;
     logic signed [31:0] cR1, cR2, cR3, cR4;
 
-    comb_filter #(.DEPTH(3203))  cfL1 (.clk(CLOCK_50), .enable(enable), .in(in_L), .out(cL1));
-    comb_filter #(.DEPTH(3571))  cfL2 (.clk(CLOCK_50), .enable(enable), .in(in_L), .out(cL2));
-    comb_filter #(.DEPTH(4211))  cfL3 (.clk(CLOCK_50), .enable(enable), .in(in_L), .out(cL3));
-    comb_filter #(.DEPTH(4877))  cfL4 (.clk(CLOCK_50), .enable(enable), .in(in_L), .out(cL4));
+    // <-- ADDED: Passed .tick(tick) into all comb_filter instances
+    comb_filter #(.DEPTH(3203))  cfL1 (.clk(CLOCK_50), .tick(tick), .enable(enable), .in(in_L), .out(cL1));
+    comb_filter #(.DEPTH(3571))  cfL2 (.clk(CLOCK_50), .tick(tick), .enable(enable), .in(in_L), .out(cL2));
+    comb_filter #(.DEPTH(4211))  cfL3 (.clk(CLOCK_50), .tick(tick), .enable(enable), .in(in_L), .out(cL3));
+    comb_filter #(.DEPTH(4877))  cfL4 (.clk(CLOCK_50), .tick(tick), .enable(enable), .in(in_L), .out(cL4));
 
-    comb_filter #(.DEPTH(3301))  cfR1 (.clk(CLOCK_50), .enable(enable), .in(in_R), .out(cR1));
-    comb_filter #(.DEPTH(3697))  cfR2 (.clk(CLOCK_50), .enable(enable), .in(in_R), .out(cR2));
-    comb_filter #(.DEPTH(4337))  cfR3 (.clk(CLOCK_50), .enable(enable), .in(in_R), .out(cR3));
-    comb_filter #(.DEPTH(4999))  cfR4 (.clk(CLOCK_50), .enable(enable), .in(in_R), .out(cR4));
+    comb_filter #(.DEPTH(3301))  cfR1 (.clk(CLOCK_50), .tick(tick), .enable(enable), .in(in_R), .out(cR1));
+    comb_filter #(.DEPTH(3697))  cfR2 (.clk(CLOCK_50), .tick(tick), .enable(enable), .in(in_R), .out(cR2));
+    comb_filter #(.DEPTH(4337))  cfR3 (.clk(CLOCK_50), .tick(tick), .enable(enable), .in(in_R), .out(cR3));
+    comb_filter #(.DEPTH(4999))  cfR4 (.clk(CLOCK_50), .tick(tick), .enable(enable), .in(in_R), .out(cR4));
 
     logic signed [33:0] wet_L, wet_R;
     logic signed [34:0] final_L, final_R;
