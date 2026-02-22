@@ -20,6 +20,7 @@ assign audio_tick = audio_in_available && audio_out_allowed;
 logic signed [31:0] mute_out_L,  mute_out_R;
 logic signed [31:0] dist_out_L,  dist_out_R;
 logic signed [31:0] echo_out_L,  echo_out_R;
+logic signed [31:0] pitch_out_L,  pitch_out_R;
 logic signed [31:0] l_processed, r_processed;
 
 mute_effect master_mute (
@@ -44,11 +45,23 @@ echo echo_effect (
     .enable(SW[2]) 
 );
 
+// --- Hardcoded Perfect 5th Pitch Shifter ---
+pitch_shifter perfect_5th_effect (
+    .CLOCK_50(CLOCK_50),
+    .tick(audio_tick),
+    .enable(SW[3]),
+    .pitch_ratio(16'h0180),  // 1.5x playback speed (Perfect 5th)
+    .in_L(echo_out_L), 
+    .in_R(echo_out_R),
+    .out_L(pitch_out_L),     // Keeping wire names for compatibility
+    .out_R(pitch_out_R)
+);
+
 vinyl vinyl_effect (
     .CLOCK_50(CLOCK_50),
-    .in_L(echo_out_L), .in_R(echo_out_R),
+    .in_L(pitch_out_L), .in_R(pitch_out_R),
     .out_L(l_processed), .out_R(r_processed),
-    .enable(SW[3]) 
+    .enable(SW[4]) 
 );
 
 // Pass the handshakes out to the codec
