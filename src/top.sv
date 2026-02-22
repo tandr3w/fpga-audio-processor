@@ -33,7 +33,7 @@ distortion dist_effect (
     .CLOCK_50(CLOCK_50),
     .in_L(mute_out_L), .in_R(mute_out_R),
     .out_L(dist_out_L), .out_R(dist_out_R),
-    .enable(SW[1]) 
+    .enable(SW[1]), .high(SW[2])
 );
 
 // We now pass audio_tick into Echo and Vinyl
@@ -42,7 +42,7 @@ echo echo_effect (
     .tick(audio_tick),
     .in_L(dist_out_L), .in_R(dist_out_R),
     .out_L(echo_out_L), .out_R(echo_out_R),
-    .enable(SW[2]) 
+    .enable(SW[3]) 
 );
 
 
@@ -50,7 +50,7 @@ logic [15:0] selected_pitch;
 
 always_comb begin
     // SW[6:4] acts as a 3-bit selector (0 to 7)
-    case (SW[6:4])
+    case (SW[7:5])
         3'b000: selected_pitch = 16'h0080; // 0.50x : Octave Down
         3'b001: selected_pitch = 16'h00C0; // 0.75x : Perfect 4th Down
         3'b010: selected_pitch = 16'h0100; // 1.00x : Normal Pitch
@@ -66,7 +66,7 @@ end
 pitch_shifter pitch_effect (
     .CLOCK_50(CLOCK_50),
     .tick(audio_tick),
-    .enable(SW[3]),
+    .enable(SW[4]),
     .pitch_ratio(selected_pitch),
     .in_L(echo_out_L), 
     .in_R(echo_out_R),
@@ -78,7 +78,7 @@ vinyl vinyl_effect (
     .CLOCK_50(CLOCK_50),
     .in_L(pitch_out_L), .in_R(pitch_out_R),
     .out_L(l_processed), .out_R(r_processed),
-    .enable(SW[7]) 
+    .enable(SW[8]) 
 );
 
 // Pass the handshakes out to the codec
