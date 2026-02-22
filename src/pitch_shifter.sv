@@ -19,6 +19,7 @@ module pitch_shifter (
     logic [27:0] r_ptr_a = 0;    
     logic [27:0] r_ptr_b;        
     
+    // Offset Head B by exactly half the buffer (2048 samples)
     assign r_ptr_b = r_ptr_a + 28'h0800000;
 
     logic [11:0] a0, a1, b0, b1;
@@ -69,7 +70,7 @@ module pitch_shifter (
                     if (dist_a < 12'd64) begin
                         gain_a = 16'(dist_a[5:0]) << 10;
                     end else if (dist_a > 12'd4031) begin  
-                        gain_a = 16'(~dist_a[5:0]) << 10;      
+                        gain_a = 16'(6'(~dist_a[5:0])) << 10;      
                     end else begin
                         gain_a = 16'hFFFF;                 
                     end
