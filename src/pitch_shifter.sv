@@ -12,8 +12,17 @@ module pitch_shifter (
 );
 
     localparam int DEPTH = 4096;
-    logic signed [31:0] mem_L [DEPTH-1:0] = '{default:0};
-    logic signed [31:0] mem_R [DEPTH-1:0] = '{default:0};
+    
+    // --- MEMORY REPLICATION FOR M10K INFERENCE ---
+    logic signed [31:0] mem_L_a0 [DEPTH-1:0] = '{default:0};
+    logic signed [31:0] mem_L_a1 [DEPTH-1:0] = '{default:0};
+    logic signed [31:0] mem_L_b0 [DEPTH-1:0] = '{default:0};
+    logic signed [31:0] mem_L_b1 [DEPTH-1:0] = '{default:0};
+
+    logic signed [31:0] mem_R_a0 [DEPTH-1:0] = '{default:0};
+    logic signed [31:0] mem_R_a1 [DEPTH-1:0] = '{default:0};
+    logic signed [31:0] mem_R_b0 [DEPTH-1:0] = '{default:0};
+    logic signed [31:0] mem_R_b1 [DEPTH-1:0] = '{default:0};
 
     logic [11:0] w_ptr = 0;      
     logic [27:0] r_ptr_a = 0;    
@@ -31,24 +40,39 @@ module pitch_shifter (
     logic signed [31:0] vA0L=0, vA1L=0, vB0L=0, vB1L=0;
     logic signed [31:0] vA0R=0, vA1R=0, vB0R=0, vB1R=0;
 
+    // --- DEDICATED READ BLOCK ---
     always_ff @(posedge CLOCK_50) begin
-        vA0L <= mem_L[a0]; vA1L <= mem_L[a1];
-        vB0L <= mem_L[b0]; vB1L <= mem_L[b1];
-        vA0R <= mem_R[a0]; vA1R <= mem_R[a1];
-        vB0R <= mem_R[b0]; vB1R <= mem_R[b1];
+        vA0L <= mem_L_a0[a0]; 
+        vA1L <= mem_L_a1[a1];
+        vB0L <= mem_L_b0[b0]; 
+        vB1L <= mem_L_b1[b1];
+        
+        vA0R <= mem_R_a0[a0]; 
+        vA1R <= mem_R_a1[a1];
+        vB0R <= mem_R_b0[b0]; 
+        vB1R <= mem_R_b1[b1];
     end
 
     localparam signed [63:0] MAX_VAL = 64'sd2147483647;
     localparam signed [63:0] MIN_VAL = -64'sd2147483648;
 
-    // --- DSP Processing Block ---
+    // --- DSP PROCESSING BLOCK ---
     always_ff @(posedge CLOCK_50) begin
         if (!enable) begin
             out_L <= in_L;
             out_R <= in_R;
         end else if (tick) begin
-            mem_L[w_ptr] <= in_L;
-            mem_R[w_ptr] <= in_R;
+            
+            // --- DEDICATED WRITE BLOCK ---
+            mem_L_a0[w_ptr] <= in_L;
+            mem_L_a1[w_ptr] <= in_L;
+            mem_L_b0[w_ptr] <= in_L;
+            mem_L_b1[w_ptr] <= in_L;
+
+            mem_R_a0[w_ptr] <= in_R;
+            mem_R_a1[w_ptr] <= in_R;
+            mem_R_b0[w_ptr] <= in_R;
+            mem_R_b1[w_ptr] <= in_R;
 
             begin
                 automatic logic [15:0] fa, fb;
