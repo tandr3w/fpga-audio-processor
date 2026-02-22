@@ -10,21 +10,21 @@ module vu_meter (
 );
 
     // Parameters for decay and thresholds
-    localparam DECAY_RATE = 16'd100;      // Decay amount per clock cycle
+    //localparam DECAY_RATE = 16'd100;      // Decay amount per clock cycle
     localparam DECAY_COUNTER_MAX = 16'd50000;  // Decay every ~1ms at 50MHz
     
     // Threshold levels for 10 LEDs (logarithmic scaling)
     // Using upper 24 bits of 32-bit audio for comparison
-    localparam logic [23:0] THRESHOLD_1  = 24'h00_0800;  // Lowest threshold
-    localparam logic [23:0] THRESHOLD_2  = 24'h00_1000;
-    localparam logic [23:0] THRESHOLD_3  = 24'h00_2000;
-    localparam logic [23:0] THRESHOLD_4  = 24'h00_4000;
-    localparam logic [23:0] THRESHOLD_5  = 24'h00_8000;
-    localparam logic [23:0] THRESHOLD_6  = 24'h01_0000;
-    localparam logic [23:0] THRESHOLD_7  = 24'h02_0000;
-    localparam logic [23:0] THRESHOLD_8  = 24'h04_0000;
-    localparam logic [23:0] THRESHOLD_9  = 24'h08_0000;
-    localparam logic [23:0] THRESHOLD_10 = 24'h10_0000;  // Highest threshold
+    localparam logic [23:0] THRESHOLD_1  = 24'h00_1600;  // Lowest threshold
+    localparam logic [23:0] THRESHOLD_2  = 24'h00_2000;
+    localparam logic [23:0] THRESHOLD_3  = 24'h00_4000;
+    localparam logic [23:0] THRESHOLD_4  = 24'h00_8000;
+    localparam logic [23:0] THRESHOLD_5  = 24'h01_6000;
+    localparam logic [23:0] THRESHOLD_6  = 24'h02_0000;
+    localparam logic [23:0] THRESHOLD_7  = 24'h04_0000;
+    localparam logic [23:0] THRESHOLD_8  = 24'h08_0000;
+    localparam logic [23:0] THRESHOLD_9  = 24'h16_0000;
+    localparam logic [23:0] THRESHOLD_10 = 24'h20_0000;  // Highest threshold
     
     // Internal signals
     logic [31:0] abs_audio_L;
