@@ -92,7 +92,7 @@ module vu_meter (
     //This is where the comparison of the input and threshold occurs
     assign current_level = peak_level[31:8];
     
-    // Map level to LED outputs (bar graph style)
+    // Map level to LED outputs
     always_comb begin
         if (current_level >= THRESHOLD_10) begin
             led_level = 10'b11_1111_1111;  // All 10 LEDs on
