@@ -48,13 +48,13 @@ module quartus_tb;
 
         // 2. Setup Switches (Turn on Distortion/Echo/etc here!)
         SW[1] = 1;
-        SW[2] = 1;
-        SW[3] = 1;
-        SW[4] = 1;
-        SW[5] = 1;
-        SW[6] = 1;
-        SW[7] = 1;
-        SW[8] = 1;
+        // SW[2] = 1;
+        // SW[3] = 1;
+        // SW[4] = 1;
+        // SW[5] = 1;
+        // SW[6] = 1;
+        // SW[7] = 1;
+        // SW[8] = 1;
         
         // 3. Reset
         #100;
