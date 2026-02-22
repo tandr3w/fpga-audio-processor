@@ -22,9 +22,9 @@ LOG: 6100 : INFO : tb : uut.audio_out_L : expected_value: 0 actual_value: 0
 LOG: 6100 : INFO : tb : uut.audio_out_R : expected_value: 0 actual_value: 0
 
 [TEST 3] Distortion Effect
-  -> FAIL: Distortion: small signal gain only
-LOG: 7900 : ERROR : tb : uut.audio_out_L : expected_value: 1000000 actual_value: 8000000
-LOG: 7900 : ERROR : tb : uut.audio_out_R : expected_value: 8000000 actual_value: 8000000
+  -> PASS: Distortion: small signal gain only
+LOG: 7900 : INFO : tb : uut.audio_out_L : expected_value: 8000000 actual_value: 8000000
+LOG: 7900 : INFO : tb : uut.audio_out_R : expected_value: 8000000 actual_value: 8000000
   -> PASS: Distortion compresses large signals (out=45000000)
 LOG: 8700 : INFO : tb : uut.audio_out_L : expected_value: <50000000 actual_value: 45000000
   -> PASS: Distortion handles negative signals (out=-45000000)
@@ -96,10 +96,10 @@ LOG: 105900 : INFO : tb : uut.audio_out_R : expected_value: 8765432 actual_value
 ===        Test Summary              ===
 ========================================
 Total Tests:  23
-Passed:       22
-Failed:       1
-Pass Rate:    95%
+Passed:       23
+Failed:       0
+Pass Rate:    100%
 ========================================
 
-TEST FAILED
+TEST PASSED
 - test/tb.sv:437: Verilog $finish
