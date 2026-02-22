@@ -7,6 +7,7 @@ Thumbs.db
 /incremental_db/
 /greybox_tmp/
 /work/
+/.cogni/
 
 # --- Compilation Outputs ---
 # These are the results of your build. Do not track them.

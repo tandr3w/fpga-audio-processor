@@ -6,9 +6,9 @@ import sys
 import os
 
 # --- CONFIGURATION ---
-INPUT_WAV  = "scripts/test_input.wav"
-INPUT_HEX  = "scripts/input.txt"
-OUTPUT_HEX = "scripts/output.txt"
+INPUT_WAV  = "scripts/test_input2.wav"
+INPUT_HEX  = "scripts/input2.txt"
+OUTPUT_HEX = "scripts/output2.txt"
 OUTPUT_WAV = "scripts/processed_output.wav"
 
 def wav_to_hex():
