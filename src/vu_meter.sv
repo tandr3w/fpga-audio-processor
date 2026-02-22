@@ -6,7 +6,7 @@ module vu_meter (
     input  logic signed [31:0] audio_in_L,
     input  logic signed [31:0] audio_in_R,
     input  logic        audio_valid,
-    output logic [9:0]  led_level
+    output logic [9:0]  led_level //The output is just turning on 0-9 LEDs
 );
 
     // Parameters for decay and thresholds
@@ -15,6 +15,8 @@ module vu_meter (
     
     // Threshold levels for 10 LEDs (logarithmic scaling)
     // Using upper 24 bits of 32-bit audio for comparison
+
+    //The threshold is used to determine if the sound input is above/below this amount before an LED turns on
     localparam logic [23:0] THRESHOLD_1  = 24'h00_1600;  // Lowest threshold
     localparam logic [23:0] THRESHOLD_2  = 24'h00_2000;
     localparam logic [23:0] THRESHOLD_3  = 24'h00_4000;
@@ -67,30 +69,32 @@ module vu_meter (
             peak_level <= 32'h0;
             decay_counter <= 16'h0;
         end else begin
-            if (audio_valid) begin
+            if (audio_valid && audio_magnitude > peak_level) begin
                 // Update peak if current magnitude is higher
                 if (audio_magnitude > peak_level) begin
                     peak_level <= audio_magnitude;
+                end
+
+                // Decay logic
+                if (decay_counter >= DECAY_COUNTER_MAX) begin
                     decay_counter <= 16'h0;
-                end else begin
-                    // Decay logic
-                    if (decay_counter >= DECAY_COUNTER_MAX) begin
-                        decay_counter <= 16'h0;
-                        // Decay the peak level
-                        if (peak_level > DECAY_RATE) begin
-                            peak_level <= peak_level - DECAY_RATE;
-                        end else begin
-                            peak_level <= 32'h0;
-                        end
+                    // Decay the peak level
+                    if (peak_level > 32'd1024) begin
+                        peak_level <= peak_level - (peak_level >>> 7);
                     end else begin
-                        decay_counter <= decay_counter + 1'b1;
+                        peak_level <= 32'h0;
                     end
+                end else begin
+                    decay_counter <= decay_counter + 1'b1;
                 end
             end
         end
     end
     
+    
     // Extract upper 24 bits for threshold comparison
+
+    //This is where the comparison of the input and threshold occurs
     assign current_level = peak_level[31:8];
     
     // Map level to LED outputs (bar graph style)
