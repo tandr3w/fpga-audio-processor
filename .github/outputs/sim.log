@@ -22,29 +22,29 @@ LOG: 6100 : INFO : tb : uut.audio_out_L : expected_value: 0 actual_value: 0
 LOG: 6100 : INFO : tb : uut.audio_out_R : expected_value: 0 actual_value: 0
 
 [TEST 3] Distortion Effect
-  -> PASS: Distortion: small signal passthrough
-LOG: 7900 : INFO : tb : uut.audio_out_L : expected_value: 1000000 actual_value: 1000000
-LOG: 7900 : INFO : tb : uut.audio_out_R : expected_value: 1000000 actual_value: 1000000
-  -> PASS: Distortion compresses large signals (out=29531250)
-LOG: 8700 : INFO : tb : uut.audio_out_L : expected_value: <50000000 actual_value: 29531250
-  -> PASS: Distortion handles negative signals (out=-29531250)
-LOG: 9500 : INFO : tb : uut.audio_out_L : expected_value: >-50000000 actual_value: -29531250
+  -> FAIL: Distortion: small signal gain only
+LOG: 7900 : ERROR : tb : uut.audio_out_L : expected_value: 1000000 actual_value: 8000000
+LOG: 7900 : ERROR : tb : uut.audio_out_R : expected_value: 2000000 actual_value: 8000000
+  -> PASS: Distortion compresses large signals (out=45000000)
+LOG: 8700 : INFO : tb : uut.audio_out_L : expected_value: <50000000 actual_value: 45000000
+  -> PASS: Distortion handles negative signals (out=-45000000)
+LOG: 9500 : INFO : tb : uut.audio_out_L : expected_value: >-50000000 actual_value: -45000000
 
 [TEST 4] Echo Effect
-  -> PASS: Echo processes audio (L=2500000, R=2500000)
-LOG: 13500 : INFO : tb : uut.audio_out_L : expected_value: non-zero actual_value: 2500000
+  -> PASS: Echo processes audio (L=5000000, R=5000000)
+LOG: 13500 : INFO : tb : uut.audio_out_L : expected_value: non-zero actual_value: 5000000
 
 [TEST 5] Vinyl Effect
-  -> PASS: Vinyl adds noise/crackle (L=19896068, R=19896068)
-LOG: 58500 : INFO : tb : uut.audio_out_L : expected_value: !=5000000 actual_value: 19896068
+  -> PASS: Vinyl adds noise/crackle (L=78125, R=78125)
+LOG: 58500 : INFO : tb : uut.audio_out_L : expected_value: !=5000000 actual_value: 78125
 
 [TEST 6] Combined Effects
-  -> PASS: Distortion + Echo combination (L=5742187, R=5742187)
-LOG: 63500 : INFO : tb : uut.audio_out_L : expected_value: non-zero actual_value: 5742187
-LOG: 63500 : INFO : tb : uut.audio_out_R : expected_value: non-zero actual_value: 5742187
-  -> PASS: All effects enabled (L=18646440, R=18646440)
-LOG: 88500 : INFO : tb : uut.audio_out_L : expected_value: non-zero actual_value: 18646440
-LOG: 88500 : INFO : tb : uut.audio_out_R : expected_value: non-zero actual_value: 18646440
+  -> PASS: Distortion + Echo combination (L=22500000, R=22500000)
+LOG: 63500 : INFO : tb : uut.audio_out_L : expected_value: non-zero actual_value: 22500000
+LOG: 63500 : INFO : tb : uut.audio_out_R : expected_value: non-zero actual_value: 22500000
+  -> PASS: All effects enabled (L=312500, R=312500)
+LOG: 88500 : INFO : tb : uut.audio_out_L : expected_value: non-zero actual_value: 312500
+LOG: 88500 : INFO : tb : uut.audio_out_R : expected_value: non-zero actual_value: 312500
 
 [TEST 7] Handshake Protocol
   -> PASS: Both handshake signals activate
@@ -64,9 +64,9 @@ LOG: 94700 : INFO : tb : uut.audio_out_L : expected_value: 0 actual_value: 0
 LOG: 94700 : INFO : tb : uut.audio_out_R : expected_value: 0 actual_value: 0
 
 [TEST 9] Switch Toggle Stability
-  -> PASS: Effect toggle stability
-LOG: 97100 : INFO : tb : uut.audio_out_L : expected_value: 8000000 actual_value: 8000000
-LOG: 97100 : INFO : tb : uut.audio_out_R : expected_value: 8000000 actual_value: 8000000
+  -> FAIL: Effect toggle stability
+LOG: 97100 : ERROR : tb : uut.audio_out_L : expected_value: 8000000 actual_value: 45000000
+LOG: 97100 : ERROR : tb : uut.audio_out_R : expected_value: 8000000 actual_value: 45000000
 
 [TEST 10] Asymmetric Channel Processing
   -> PASS: Independent channel processing
@@ -96,10 +96,10 @@ LOG: 104300 : INFO : tb : uut.audio_out_R : expected_value: 8765432 actual_value
 ===        Test Summary              ===
 ========================================
 Total Tests:  23
-Passed:       23
-Failed:       0
-Pass Rate:    100%
+Passed:       21
+Failed:       2
+Pass Rate:    91%
 ========================================
 
-TEST PASSED
+TEST FAILED
 - test/tb.sv:427: Verilog $finish
