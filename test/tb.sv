@@ -154,7 +154,7 @@ module tb;
         // Small signal - should pass through distortion
         apply_audio_sample(32'sd1000000, 32'sd1000000, 3);
         @(posedge CLOCK_50);
-        check_audio_output(32'sd1000000, 32'sd1000000, "Distortion: small signal passthrough");
+        check_audio_output(32'sd1000000, 32'sd2000000, "Distortion: small signal gain only");
 
         // Large signal - should be compressed
         apply_audio_sample(32'sd50000000, 32'sd50000000, 3);

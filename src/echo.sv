@@ -41,8 +41,8 @@ module echo (
             wet_L = 34'(cL1) + 34'(cL2) + 34'(cL3) + 34'(cL4);
             wet_R = 34'(cR1) + 34'(cR2) + 34'(cR3) + 34'(cR4);
 
-            final_L = (35'(in_L) >>> 2) + (35'(wet_L) >>> 2);
-            final_R = (35'(in_R) >>> 2) + (35'(wet_R) >>> 2);
+            final_L = (35'(in_L) >>> 1) + (35'(wet_L) >>> 2);
+            final_R = (35'(in_R) >>> 1) + (35'(wet_R) >>> 2);
 
             // Ensure output does not pass max/min values for audio and cause wrapping (crackles)
             if (final_L > MAX_VAL)      out_L = 32'h7FFFFFFF;
