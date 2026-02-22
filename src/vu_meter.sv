@@ -68,17 +68,15 @@ module vu_meter (
             peak_level <= 32'h0;
             decay_counter <= 16'h0;
         end else begin
-            if (audio_valid && audio_magnitude > peak_level) begin
+            if (audio_valid && (audio_magnitude > peak_level)) begin
                 // Update peak if current magnitude is higher
-                if (audio_magnitude > peak_level) begin
-                    peak_level <= audio_magnitude;
-                end
+                peak_level <= audio_magnitude;
 
                 // Decay logic
-                if (decay_counter >= DECAY_COUNTER_MAX) begin
-                    decay_counter <= 16'h0;
-                    // Decay the peak level
-                    if (peak_level > 32'd1024) begin
+            if (decay_counter >= DECAY_COUNTER_MAX) begin
+                decay_counter <= 16'h0;
+                // Decay the peak level
+                    if (peak_level > 0) begin
                         peak_level <= peak_level - (peak_level >>> 7);
                     end else begin
                         peak_level <= 32'h0;
