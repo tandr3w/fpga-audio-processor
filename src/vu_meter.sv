@@ -68,11 +68,14 @@ module vu_meter (
             peak_level <= 32'h0;
             decay_counter <= 16'h0;
         end else begin
+            
+            //Attack (Jump in sound goes up) Logic:
             if (audio_valid && (audio_magnitude > peak_level)) begin
                 // Update peak if current magnitude is higher
                 peak_level <= audio_magnitude;
+            end
 
-                // Decay logic
+            // Decay (Jump in sound goes down) Logic:
             if (decay_counter >= DECAY_COUNTER_MAX) begin
                 decay_counter <= 16'h0;
                 // Decay the peak level
@@ -86,7 +89,6 @@ module vu_meter (
                 end
             end
         end
-    end
     
     
     // Extract upper 24 bits for threshold comparison
