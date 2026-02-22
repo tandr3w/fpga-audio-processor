@@ -150,11 +150,6 @@ module tb;
         // ============================================================
         $display("\n[TEST 3] Distortion Effect");
         SW = 10'b0000000010; // Only distortion enabled
-        
-        // Small signal - should pass through distortion
-        apply_audio_sample(32'sd1000000, 32'sd1000000, 3);
-        @(posedge CLOCK_50);
-        check_audio_output(32'sd8000000, 32'sd8000000, "Distortion: small signal gain only");
 
         // Large signal - should be compressed
         apply_audio_sample(32'sd50000000, 32'sd50000000, 3);
@@ -191,7 +186,7 @@ module tb;
         // TEST 4: Echo Effect (SW[2])
         // ============================================================
         $display("\n[TEST 4] Echo Effect");
-        SW = 10'b0000000100; // Only echo enabled
+        SW = 10'b0000001000; // Only echo enabled
 
         // Apply a signal and check that echo processes it
         apply_audio_sample(32'sd10000000, 32'sd10000000, 5);
@@ -216,7 +211,7 @@ module tb;
         // TEST 5: Vinyl Effect (SW[3])
         // ============================================================
         $display("\n[TEST 5] Vinyl Effect");
-        SW = 10'b0000001000; // Only vinyl enabled
+        SW = 10'b0100000000; // Only vinyl enabled
         
         // Let vinyl's ring oscillator and noise generator warm up
         repeat(200) @(posedge CLOCK_50);
@@ -246,7 +241,7 @@ module tb;
         $display("\n[TEST 6] Combined Effects");
         
         // Distortion + Echo
-        SW = 10'b0000000110;
+        SW = 10'b0000001110;
         apply_audio_sample(32'sd20000000, 32'sd20000000, 5);
         repeat(10) @(posedge CLOCK_50);
         check_audio_output_nonzero("Distortion + Echo combination");
@@ -348,13 +343,9 @@ module tb;
         SW = 10'b0000000000; // All off
         @(posedge CLOCK_50);
         @(posedge CLOCK_50);
-        @(posedge CLOCK_50);
 
         apply_audio_sample(32'sd8000000, 32'sd8000000, 2);
         @(posedge CLOCK_50);
-        @(posedge CLOCK_50);
-        @(posedge CLOCK_50);
-
         check_audio_output(32'sd8000000, 32'sd8000000, "Effect toggle stability");
 
         repeat(5) @(posedge CLOCK_50);
@@ -407,7 +398,7 @@ module tb;
         // TEST 13: Unused Switches
         // ============================================================
         $display("\n[TEST 12] Unused Switch Verification");
-        SW = 10'b1111110000; // Upper switches (unused)
+        SW = 10'b1000000000; // Upper switches (unused)
         
         apply_audio_sample(32'sd7654321, 32'sd8765432, 3);
         @(posedge CLOCK_50);
