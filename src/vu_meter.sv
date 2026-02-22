@@ -73,10 +73,9 @@ module vu_meter (
             if (audio_valid && (audio_magnitude > peak_level)) begin
                 // Update peak if current magnitude is higher
                 peak_level <= audio_magnitude;
-            end
 
+            end else if (decay_counter >= DECAY_COUNTER_MAX) begin
             // Decay (Jump in sound goes down) Logic:
-            if (decay_counter >= DECAY_COUNTER_MAX) begin
                 decay_counter <= 16'h0;
                 // Decay the peak level
                     if (peak_level > 0) begin
