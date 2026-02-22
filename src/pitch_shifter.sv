@@ -67,17 +67,17 @@ module pitch_shifter (
                     dist_a = w_ptr - r_ptr_a[27:16];
                     
                     if (dist_a < 12'd64) begin
-                        gain_a = dist_a[5:0] << 10;
+                        gain_a = 16'(dist_a[5:0]) << 10;
                     end else if (dist_a > 12'd4031) begin  
-                        gain_a = (~dist_a[5:0]) << 10;      
+                        gain_a = 16'(~dist_a[5:0]) << 10;      
                     end else begin
                         gain_a = 16'hFFFF;                 
                     end
 
-                    diff_AL = $signed(vA1L) - $signed(vA0L);
-                    diff_AR = $signed(vA1R) - $signed(vA0R);
-                    diff_BL = $signed(vB1L) - $signed(vB0L);
-                    diff_BR = $signed(vB1R) - $signed(vB0R);
+                    diff_AL = 64'($signed(vA1L)) - 64'($signed(vA0L));
+                    diff_AR = 64'($signed(vA1R)) - 64'($signed(vA0R));
+                    diff_BL = 64'($signed(vB1L)) - 64'($signed(vB0L));
+                    diff_BR = 64'($signed(vB1R)) - 64'($signed(vB0R));
 
                     mult_AL = diff_AL * $signed({1'b0, fa});
                     mult_AR = diff_AR * $signed({1'b0, fa});
@@ -94,8 +94,8 @@ module pitch_shifter (
                     cross_BL = $signed(iBL) * $signed({1'b0, ~gain_a});
                     cross_BR = $signed(iBR) * $signed({1'b0, ~gain_a});
 
-                    sum_L = $signed(cross_AL[47:16]) + $signed(cross_BL[47:16]);
-                    sum_R = $signed(cross_AR[47:16]) + $signed(cross_BR[47:16]);
+                    sum_L = 64'($signed(cross_AL[47:16])) + 64'($signed(cross_BL[47:16]));
+                    sum_R = 64'($signed(cross_AR[47:16])) + 64'($signed(cross_BR[47:16]));
 
                     if (sum_L > MAX_VAL)      out_L <= 32'h7FFFFFFF;
                     else if (sum_L < MIN_VAL) out_L <= 32'h80000000;
