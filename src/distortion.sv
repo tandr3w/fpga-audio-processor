@@ -19,11 +19,11 @@ module distortion (
 
     always_comb begin
         if (high) begin
-            SOFT_THRESH = 32'd200000000;
-            HARD_THRESH = 32'd800000000;
+            SOFT_THRESH = 32'd100000000;
+            HARD_THRESH = 32'd400000000;
         end else begin
             SOFT_THRESH = 32'd20000000;
-            HARD_THRESH = 32'd80000000;
+            HARD_THRESH = 32'd100000000;
         end    
         if (!enable) begin
             out_L = in_L;
