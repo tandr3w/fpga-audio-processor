@@ -38,8 +38,8 @@ module quartus_tb;
         // 1. Open Files
         // Note: ModelSim runs inside the "simulation/modelsim" folder usually,
         // so we use "../" to find the files in the project root.
-        f_in  = $fopen("scripts/input.txt", "r");
-        f_out = $fopen("scripts/output.txt", "w");
+        f_in  = $fopen("scripts/input2.txt", "r");
+        f_out = $fopen("scripts/output2.txt", "w");
 
         if (f_in == 0) begin
             $display("ERROR: Could not find input.txt");

@@ -154,7 +154,7 @@ module tb;
         // Small signal - should pass through distortion
         apply_audio_sample(32'sd1000000, 32'sd1000000, 3);
         @(posedge CLOCK_50);
-        check_audio_output(32'sd1000000, 32'sd8000000, "Distortion: small signal gain only");
+        check_audio_output(32'sd8000000, 32'sd8000000, "Distortion: small signal gain only");
 
         // Large signal - should be compressed
         apply_audio_sample(32'sd50000000, 32'sd50000000, 3);
@@ -354,7 +354,7 @@ module tb;
         @(posedge CLOCK_50);
         @(posedge CLOCK_50);
         @(posedge CLOCK_50);
-        
+
         check_audio_output(32'sd8000000, 32'sd8000000, "Effect toggle stability");
 
         repeat(5) @(posedge CLOCK_50);
