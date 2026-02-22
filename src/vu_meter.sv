@@ -11,9 +11,6 @@ module vu_meter (
 
     // Parameters for decay and thresholds
     localparam DECAY_COUNTER_MAX = 16'd50000;  // Decay every ~1ms at 50MHz
-    
-    // Threshold levels for 10 LEDs (logarithmic scaling)
-    // Using upper 24 bits of 32-bit audio for comparison
 
     //The threshold is used to determine if the sound input is above/below this amount before an LED turns on
     localparam logic [23:0] THRESHOLD_1  = 24'h00_1600;  // Lowest threshold
