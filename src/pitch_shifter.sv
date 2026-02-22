@@ -43,73 +43,71 @@ module pitch_shifter (
 
     // --- DSP Processing Block ---
     always_ff @(posedge CLOCK_50) begin
-        if (tick) begin
-            if (!enable) begin
-                out_L <= in_L;
-                out_R <= in_R;
-            end else begin
-                mem_L[w_ptr] <= in_L;
-                mem_R[w_ptr] <= in_R;
+        if (!enable) begin
+            out_L <= in_L;
+            out_R <= in_R;
+        end else if (tick) begin
+            mem_L[w_ptr] <= in_L;
+            mem_R[w_ptr] <= in_R;
 
-                begin
-                    automatic logic [15:0] fa, fb;
-                    automatic logic [11:0] dist_a;
-                    automatic logic [15:0] gain_a;
+            begin
+                automatic logic [15:0] fa, fb;
+                automatic logic [11:0] dist_a;
+                automatic logic [15:0] gain_a;
 
-                    automatic logic signed [63:0] diff_AL, diff_AR, diff_BL, diff_BR;
-                    automatic logic signed [63:0] mult_AL, mult_AR, mult_BL, mult_BR;
-                    automatic logic signed [31:0] iAL, iAR, iBL, iBR;
-                    automatic logic signed [63:0] cross_AL, cross_AR, cross_BL, cross_BR;
-                    automatic logic signed [63:0] sum_L, sum_R;
+                automatic logic signed [63:0] diff_AL, diff_AR, diff_BL, diff_BR;
+                automatic logic signed [63:0] mult_AL, mult_AR, mult_BL, mult_BR;
+                automatic logic signed [31:0] iAL, iAR, iBL, iBR;
+                automatic logic signed [63:0] cross_AL, cross_AR, cross_BL, cross_BR;
+                automatic logic signed [63:0] sum_L, sum_R;
 
-                    fa = r_ptr_a[15:0];
-                    fb = r_ptr_b[15:0];
-                    
-                    dist_a = w_ptr - r_ptr_a[27:16];
-                    
-                    if (dist_a < 12'd64) begin
-                        gain_a = 16'(dist_a[5:0]) << 10;
-                    end else if (dist_a > 12'd4031) begin  
-                        gain_a = 16'(6'(~dist_a[5:0])) << 10;      
-                    end else begin
-                        gain_a = 16'hFFFF;                 
-                    end
-
-                    diff_AL = 64'($signed(vA1L)) - 64'($signed(vA0L));
-                    diff_AR = 64'($signed(vA1R)) - 64'($signed(vA0R));
-                    diff_BL = 64'($signed(vB1L)) - 64'($signed(vB0L));
-                    diff_BR = 64'($signed(vB1R)) - 64'($signed(vB0R));
-
-                    mult_AL = diff_AL * $signed({1'b0, fa});
-                    mult_AR = diff_AR * $signed({1'b0, fa});
-                    mult_BL = diff_BL * $signed({1'b0, fb});
-                    mult_BR = diff_BR * $signed({1'b0, fb});
-
-                    iAL = vA0L + mult_AL[47:16];
-                    iAR = vA0R + mult_AR[47:16];
-                    iBL = vB0L + mult_BL[47:16];
-                    iBR = vB0R + mult_BR[47:16];
-
-                    cross_AL = $signed(iAL) * $signed({1'b0, gain_a});
-                    cross_AR = $signed(iAR) * $signed({1'b0, gain_a});
-                    cross_BL = $signed(iBL) * $signed({1'b0, ~gain_a});
-                    cross_BR = $signed(iBR) * $signed({1'b0, ~gain_a});
-
-                    sum_L = 64'($signed(cross_AL[47:16])) + 64'($signed(cross_BL[47:16]));
-                    sum_R = 64'($signed(cross_AR[47:16])) + 64'($signed(cross_BR[47:16]));
-
-                    if (sum_L > MAX_VAL)      out_L <= 32'h7FFFFFFF;
-                    else if (sum_L < MIN_VAL) out_L <= 32'h80000000;
-                    else                      out_L <= sum_L[31:0];
-
-                    if (sum_R > MAX_VAL)      out_R <= 32'h7FFFFFFF;
-                    else if (sum_R < MIN_VAL) out_R <= 32'h80000000;
-                    else                      out_R <= sum_R[31:0];
+                fa = r_ptr_a[15:0];
+                fb = r_ptr_b[15:0];
+                
+                dist_a = w_ptr - r_ptr_a[27:16];
+                
+                if (dist_a < 12'd64) begin
+                    gain_a = 16'(dist_a[5:0]) << 10;
+                end else if (dist_a > 12'd4031) begin  
+                    gain_a = 16'(6'(~dist_a[5:0])) << 10;      
+                end else begin
+                    gain_a = 16'hFFFF;                 
                 end
 
-                w_ptr   <= w_ptr + 12'd1;
-                r_ptr_a <= r_ptr_a + {4'b0, pitch_ratio, 8'b0};
+                diff_AL = 64'($signed(vA1L)) - 64'($signed(vA0L));
+                diff_AR = 64'($signed(vA1R)) - 64'($signed(vA0R));
+                diff_BL = 64'($signed(vB1L)) - 64'($signed(vB0L));
+                diff_BR = 64'($signed(vB1R)) - 64'($signed(vB0R));
+
+                mult_AL = diff_AL * $signed({1'b0, fa});
+                mult_AR = diff_AR * $signed({1'b0, fa});
+                mult_BL = diff_BL * $signed({1'b0, fb});
+                mult_BR = diff_BR * $signed({1'b0, fb});
+
+                iAL = vA0L + mult_AL[47:16];
+                iAR = vA0R + mult_AR[47:16];
+                iBL = vB0L + mult_BL[47:16];
+                iBR = vB0R + mult_BR[47:16];
+
+                cross_AL = $signed(iAL) * $signed({1'b0, gain_a});
+                cross_AR = $signed(iAR) * $signed({1'b0, gain_a});
+                cross_BL = $signed(iBL) * $signed({1'b0, ~gain_a});
+                cross_BR = $signed(iBR) * $signed({1'b0, ~gain_a});
+
+                sum_L = 64'($signed(cross_AL[47:16])) + 64'($signed(cross_BL[47:16]));
+                sum_R = 64'($signed(cross_AR[47:16])) + 64'($signed(cross_BR[47:16]));
+
+                if (sum_L > MAX_VAL)      out_L <= 32'h7FFFFFFF;
+                else if (sum_L < MIN_VAL) out_L <= 32'h80000000;
+                else                      out_L <= sum_L[31:0];
+
+                if (sum_R > MAX_VAL)      out_R <= 32'h7FFFFFFF;
+                else if (sum_R < MIN_VAL) out_R <= 32'h80000000;
+                else                      out_R <= sum_R[31:0];
             end
+
+            w_ptr   <= w_ptr + 12'd1;
+            r_ptr_a <= r_ptr_a + {4'b0, pitch_ratio, 8'b0};
         end
     end
 

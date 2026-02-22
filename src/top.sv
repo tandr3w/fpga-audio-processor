@@ -51,9 +51,9 @@ logic [15:0] selected_pitch;
 always_comb begin
     // SW[6:4] acts as a 3-bit selector (0 to 7)
     case (SW[6:4])
-        3'b000: selected_pitch = 16'h0100; // 1.00x : Normal Pitch
-        3'b001: selected_pitch = 16'h0080; // 0.50x : Octave Down
-        3'b010: selected_pitch = 16'h00C0; // 0.75x : Perfect 4th Down
+        3'b000: selected_pitch = 16'h0080; // 0.50x : Octave Down
+        3'b001: selected_pitch = 16'h00C0; // 0.75x : Perfect 4th Down
+        3'b010: selected_pitch = 16'h0100; // 1.00x : Normal Pitch
         3'b011: selected_pitch = 16'h0140; // 1.25x : Major 3rd Up
         3'b100: selected_pitch = 16'h0155; // 1.33x : Perfect 4th Up
         3'b101: selected_pitch = 16'h0180; // 1.50x : Perfect 5th Up
