@@ -10,7 +10,6 @@ module vu_meter (
 );
 
     // Parameters for decay and thresholds
-    //localparam DECAY_RATE = 16'd100;      // Decay amount per clock cycle
     localparam DECAY_COUNTER_MAX = 16'd50000;  // Decay every ~1ms at 50MHz
     
     // Threshold levels for 10 LEDs (logarithmic scaling)
