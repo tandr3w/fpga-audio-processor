@@ -40,9 +40,6 @@ module de1soc_wrapper (
 );
     // Default Assignments
 
-    // LEDs off
-    assign LEDR = 10'b0;
-
     // HEX displays off (active-low)
     assign HEX0 = 7'b1111111;
     assign HEX1 = 7'b1111111;
@@ -64,6 +61,7 @@ module de1soc_wrapper (
     wire [31:0] logic_to_spk_L, logic_to_spk_R; // port to send output to driver
     wire audio_in_available, audio_out_allowed;
     wire read_request, write_request;
+    wire [9:0] vu_meter_leds; // VU meter LED output
 
     avconf cfg (
         .CLOCK_50      (CLOCK_50),
@@ -112,5 +110,18 @@ module de1soc_wrapper (
         .read_audio_in(read_request),               
         .write_audio_out(write_request)          
     );
+
+    // VU Meter for audio level visualization on LEDs
+    vu_meter vu_display (
+        .clock       (CLOCK_50),
+        .reset       (~KEY[0]),           // Reset when button 0 is pressed
+        .audio_in_L  (mic_to_logic_L),    // Microphone input left channel
+        .audio_in_R  (mic_to_logic_R),    // Microphone input right channel
+        .audio_valid (audio_in_available), // Valid signal from audio controller
+        .led_level   (vu_meter_leds)      // Output to LEDR[9:0]
+    );
+
+    // Drive LEDs with VU meter output
+    assign LEDR = vu_meter_leds;
 
 endmodule
